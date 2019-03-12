@@ -1,9 +1,7 @@
 package com.icthh.xm.tmf.ms.qualification.security;
 
 import com.icthh.xm.tmf.ms.qualification.config.Constants;
-
 import java.util.Optional;
-
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
