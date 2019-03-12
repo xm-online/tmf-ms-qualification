@@ -2,11 +2,20 @@
  * Plugin that provides API-first development using OpenAPI-generator to
  * generate Spring-MVC endpoint stubs at compile time from an OpenAPI definition file
  */
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "org.openapitools:openapi-generator-gradle-plugin:3.3.1"
+    }
+}
+
 apply plugin: 'org.openapi.generator'
 
-openApiGenerate {
+task openApiGenerateOffering(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
     generatorName = "spring"
-    inputSpec = "$rootDir/src/main/resources/swagger/api.yml".toString()
+    inputSpec = "$rootDir/src/main/resources/swagger/offering.yml".toString()
     outputDir = "$buildDir/openapi".toString()
     apiPackage = "com.icthh.xm.tmf.ms.qualification.web.api"
     modelPackage = "com.icthh.xm.tmf.ms.qualification.web.api.model"
@@ -17,6 +26,22 @@ openApiGenerate {
     validateSpec = true
 }
 
+task openApiGeneratePromotion(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
+    generatorName = "spring"
+    inputSpec = "$rootDir/src/main/resources/swagger/promotion.yml".toString()
+    outputDir = "$buildDir/openapi".toString()
+    apiPackage = "com.icthh.xm.tmf.ms.qualification.web.api"
+    modelPackage = "com.icthh.xm.tmf.ms.qualification.web.api.model"
+    apiFilesConstrainedTo = [""]
+    modelFilesConstrainedTo = [""]
+    supportingFilesConstrainedTo = ["ApiUtil.java"]
+    configOptions = [delegatePattern: "true"]
+    validateSpec = true
+}
+
+task allOpenApiGenerate(dependsOn: ['openApiGenerateOffering', 'openApiGeneratePromotion'])
+
+
 sourceSets {
     main {
         java {
@@ -25,4 +50,4 @@ sourceSets {
     }
 }
 
-compileJava.dependsOn("openApiGenerate")
+compileJava.dependsOn("allOpenApiGenerate")
