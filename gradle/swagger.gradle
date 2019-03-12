@@ -41,7 +41,6 @@ task openApiGeneratePromotion(type: org.openapitools.generator.gradle.plugin.tas
 
 task allOpenApiGenerate(dependsOn: ['openApiGenerateOffering', 'openApiGeneratePromotion'])
 
-
 sourceSets {
     main {
         java {
