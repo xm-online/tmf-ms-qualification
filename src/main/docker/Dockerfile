@@ -17,5 +17,5 @@ ADD src/main/docker/entrypoint.sh /
 
 RUN chmod 755 entrypoint.sh
 
-ADD build/libs/*.war /app.war
+COPY build/libs/*.war /app.war
 
