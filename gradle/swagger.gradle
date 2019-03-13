@@ -11,8 +11,6 @@ buildscript {
     }
 }
 
-apply plugin: 'org.openapi.generator'
-
 task openApiGenerateOffering(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
     generatorName = "spring"
     inputSpec = "$rootDir/src/main/resources/swagger/offering.yml".toString()
@@ -39,7 +37,7 @@ task openApiGeneratePromotion(type: org.openapitools.generator.gradle.plugin.tas
     validateSpec = true
 }
 
-task allOpenApiGenerate(dependsOn: ['openApiGenerateOffering', 'openApiGeneratePromotion'])
+task openApiGenerate(dependsOn: ['openApiGenerateOffering', 'openApiGeneratePromotion'])
 
 sourceSets {
     main {
@@ -49,4 +47,4 @@ sourceSets {
     }
 }
 
-compileJava.dependsOn("allOpenApiGenerate")
+compileJava.dependsOn("openApiGenerate")
