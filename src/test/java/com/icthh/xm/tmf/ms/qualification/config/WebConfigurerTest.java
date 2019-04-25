@@ -3,6 +3,7 @@ package com.icthh.xm.tmf.ms.qualification.config;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.servlet.InstrumentedFilter;
 import com.codahale.metrics.servlets.MetricsServlet;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.JHipsterProperties;
 import io.undertow.Undertow;
@@ -50,6 +51,8 @@ public class WebConfigurerTest {
 
     private MetricRegistry metricRegistry;
 
+    private ObjectMapper objectMapper;
+
     @Before
     public void setup() {
         servletContext = spy(new MockServletContext());
@@ -61,7 +64,8 @@ public class WebConfigurerTest {
         env = new MockEnvironment();
         props = new JHipsterProperties();
 
-        webConfigurer = new WebConfigurer(env, props);
+        objectMapper = new ObjectMapper();
+        webConfigurer = new WebConfigurer(env, props, objectMapper);
         metricRegistry = new MetricRegistry();
         webConfigurer.setMetricRegistry(metricRegistry);
     }
