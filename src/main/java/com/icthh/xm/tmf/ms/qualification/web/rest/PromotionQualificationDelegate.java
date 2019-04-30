@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 @LepService(group = "service", name = "default")
 public class PromotionQualificationDelegate implements PromotionQualificationApiDelegate {
@@ -19,8 +21,9 @@ public class PromotionQualificationDelegate implements PromotionQualificationApi
     @PreAuthorize("hasPermission({}, 'QUALIFICATION.PROMOTION.GET')")
     @Override
     public ResponseEntity<PromotionQualification> promotionQualificationFind(String profile,
-                                                                      String relatedPartyId,
-                                                                      String channelId) {
+                                                                             String relatedPartyId,
+                                                                             String channelId,
+                                                                             Map<String, String> characteristic) {
         return ResponseEntity.ok(new PromotionQualification());
     }
 }

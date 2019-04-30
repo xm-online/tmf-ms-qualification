@@ -1,870 +1,999 @@
-swagger: '2.0'
+openapi: 3.0.0
 info:
-    description: "Promotion Qualification API is one of Pre-Ordering Management API Family. This API allows to request a specific promotion eligibility."
-    version: 1.0.0_
-    title: API PromotionQualification
-host: serverRoot
-basePath: /api/promotionQualificationManagement/v1
-schemes:
-    - https
-consumes:
-    - application/json;charset=utf-8
-produces:
-    - application/json;charset=utf-8
+  description: Promotion Qualification API is one of Pre-Ordering Management API Family.
+    This API allows to request a specific promotion eligibility.
+  version: 1.0.0_
+  title: API PromotionQualification
 tags:
-    - name: PromotionQualification
-      description: ''
-    - name: Hub
-      description: ''
+  - name: PromotionQualification
+    description: ""
+  - name: Hub
+    description: ""
 paths:
-    /promotionQualification:
-        get:
-            tags:
-                - PromotionQualification
-            operationId: promotionQualificationFind
-            summary: find promotionQualification
-            description: |
-                Specific business errors for current operation will be encapsulated in
-                HTTP Response 422 Unprocessable entity
-            deprecated: false
-            parameters:
-                - name: profile
-                  required: false
-                  in: query
-                  description: ''
-                  type: string
-                - name: relatedParty.id
-                  required: false
-                  in: query
-                  description: ''
-                  type: string
-                - name: channel.id
-                  required: false
-                  in: query
-                  description: ''
-                  type: string
-            responses:
-                '200':
-                    description: Success
-                    schema:
-                        $ref: '#/definitions/PromotionQualification'
-                '400':
-                    description: |-
-                        Bad Request
-                        List of supported error codes:
-                        - 20: Invalid URL parameter value
-                        - 21: Missing body
-                        - 22: Invalid body
-                        - 23: Missing body field
-                        - 24: Invalid body field
-                        - 25: Missing header
-                        - 26: Invalid header value
-                        - 27: Missing query-string parameter
-                        - 28: Invalid query-string parameter value
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '401':
-                    description: |-
-                        Unauthorized
-                        List of supported error codes:
-                        - 40: Missing credentials
-                        - 41: Invalid credentials
-                        - 42: Expired credentials
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '403':
-                    description: |-
-                        Forbidden
-                        List of supported error codes:
-                        - 50: Access denied
-                        - 51: Forbidden requester
-                        - 52: Forbidden user
-                        - 53: Too many requests
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '404':
-                    description: |-
-                        Not Found
-                        List of supported error codes:
-                        - 60: Resource not found
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '422':
-                    description: |-
-                        Unprocessable entity
-                        Functional error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '500':
-                    description: |-
-                        Internal Server Error
-                        List of supported error codes:
-                        - 1: Internal error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '503':
-                    description: |-
-                        Service Unavailable
-                        List of supported error codes:
-                        - 5: The service is temporarily unavailable
-                        - 6: Orange API is over capacity, retry later !
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-    /hub:
-        post:
-            tags:
-                - Hub
-            operationId: hubCreate
-            summary: create hub
-            description: |
-                Specific business errors for current operation will be encapsulated in
-                HTTP Response 422 Unprocessable entity
-            deprecated: false
-            parameters:
-                - name: hub
-                  required: true
-                  in: body
-                  description: ''
-                  schema:
-                      $ref: '#/definitions/Hub'
-            responses:
-                '201':
-                    description: Success
-                    schema:
-                        $ref: '#/definitions/Hub'
-                '400':
-                    description: |-
-                        Bad Request
-                        List of supported error codes:
-                        - 20: Invalid URL parameter value
-                        - 21: Missing body
-                        - 22: Invalid body
-                        - 23: Missing body field
-                        - 24: Invalid body field
-                        - 25: Missing header
-                        - 26: Invalid header value
-                        - 27: Missing query-string parameter
-                        - 28: Invalid query-string parameter value
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '401':
-                    description: |-
-                        Unauthorized
-                        List of supported error codes:
-                        - 40: Missing credentials
-                        - 41: Invalid credentials
-                        - 42: Expired credentials
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '403':
-                    description: |-
-                        Forbidden
-                        List of supported error codes:
-                        - 50: Access denied
-                        - 51: Forbidden requester
-                        - 52: Forbidden user
-                        - 53: Too many requests
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '404':
-                    description: |-
-                        Not Found
-                        List of supported error codes:
-                        - 60: Resource not found
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '422':
-                    description: |-
-                        Unprocessable entity
-                        Functional error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '500':
-                    description: |-
-                        Internal Server Error
-                        List of supported error codes:
-                        - 1: Internal error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '503':
-                    description: |-
-                        Service Unavailable
-                        List of supported error codes:
-                        - 5: The service is temporarily unavailable
-                        - 6: Orange API is over capacity, retry later !
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-        get:
-            tags:
-                - Hub
-            operationId: hubFind
-            summary: find hub
-            description: |
-                Specific business errors for current operation will be encapsulated in
-                HTTP Response 422 Unprocessable entity
-            deprecated: false
-            responses:
-                '200':
-                    description: Success
-                    schema:
-                        type: array
-                        items:
-                            $ref: '#/definitions/Hub'
-                '400':
-                    description: |-
-                        Bad Request
-                        List of supported error codes:
-                        - 20: Invalid URL parameter value
-                        - 21: Missing body
-                        - 22: Invalid body
-                        - 23: Missing body field
-                        - 24: Invalid body field
-                        - 25: Missing header
-                        - 26: Invalid header value
-                        - 27: Missing query-string parameter
-                        - 28: Invalid query-string parameter value
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '401':
-                    description: |-
-                        Unauthorized
-                        List of supported error codes:
-                        - 40: Missing credentials
-                        - 41: Invalid credentials
-                        - 42: Expired credentials
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '403':
-                    description: |-
-                        Forbidden
-                        List of supported error codes:
-                        - 50: Access denied
-                        - 51: Forbidden requester
-                        - 52: Forbidden user
-                        - 53: Too many requests
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '404':
-                    description: |-
-                        Not Found
-                        List of supported error codes:
-                        - 60: Resource not found
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '422':
-                    description: |-
-                        Unprocessable entity
-                        Functional error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '500':
-                    description: |-
-                        Internal Server Error
-                        List of supported error codes:
-                        - 1: Internal error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '503':
-                    description: |-
-                        Service Unavailable
-                        List of supported error codes:
-                        - 5: The service is temporarily unavailable
-                        - 6: Orange API is over capacity, retry later !
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-    '/hub/{hubId}':
-        get:
-            tags:
-                - Hub
-            operationId: hubGet
-            summary: get hub
-            description: |
-                Specific business errors for current operation will be encapsulated in
-                HTTP Response 422 Unprocessable entity
-            deprecated: false
-            parameters:
-                - name: hubId
-                  in: path
-                  required: true
-                  type: string
-                  description: ''
-            responses:
-                '200':
-                    description: Success
-                    schema:
-                        $ref: '#/definitions/Hub'
-                '400':
-                    description: |-
-                        Bad Request
-                        List of supported error codes:
-                        - 20: Invalid URL parameter value
-                        - 21: Missing body
-                        - 22: Invalid body
-                        - 23: Missing body field
-                        - 24: Invalid body field
-                        - 25: Missing header
-                        - 26: Invalid header value
-                        - 27: Missing query-string parameter
-                        - 28: Invalid query-string parameter value
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '401':
-                    description: |-
-                        Unauthorized
-                        List of supported error codes:
-                        - 40: Missing credentials
-                        - 41: Invalid credentials
-                        - 42: Expired credentials
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '403':
-                    description: |-
-                        Forbidden
-                        List of supported error codes:
-                        - 50: Access denied
-                        - 51: Forbidden requester
-                        - 52: Forbidden user
-                        - 53: Too many requests
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '404':
-                    description: |-
-                        Not Found
-                        List of supported error codes:
-                        - 60: Resource not found
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '422':
-                    description: |-
-                        Unprocessable entity
-                        Functional error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '500':
-                    description: |-
-                        Internal Server Error
-                        List of supported error codes:
-                        - 1: Internal error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '503':
-                    description: |-
-                        Service Unavailable
-                        List of supported error codes:
-                        - 5: The service is temporarily unavailable
-                        - 6: Orange API is over capacity, retry later !
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-        patch:
-            tags:
-                - Hub
-            operationId: hubPatch
-            summary: patch hub
-            description: |
-                Specific business errors for current operation will be encapsulated in
-                HTTP Response 422 Unprocessable entity
-            deprecated: false
-            parameters:
-                - name: hubId
-                  in: path
-                  required: true
-                  type: string
-                  description: ''
-                - name: hub
-                  required: true
-                  in: body
-                  description: ''
-                  schema:
-                      $ref: '#/definitions/Hub'
-            responses:
-                '200':
-                    description: Success
-                    schema:
-                        $ref: '#/definitions/Hub'
-                '400':
-                    description: |-
-                        Bad Request
-                        List of supported error codes:
-                        - 20: Invalid URL parameter value
-                        - 21: Missing body
-                        - 22: Invalid body
-                        - 23: Missing body field
-                        - 24: Invalid body field
-                        - 25: Missing header
-                        - 26: Invalid header value
-                        - 27: Missing query-string parameter
-                        - 28: Invalid query-string parameter value
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '401':
-                    description: |-
-                        Unauthorized
-                        List of supported error codes:
-                        - 40: Missing credentials
-                        - 41: Invalid credentials
-                        - 42: Expired credentials
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '403':
-                    description: |-
-                        Forbidden
-                        List of supported error codes:
-                        - 50: Access denied
-                        - 51: Forbidden requester
-                        - 52: Forbidden user
-                        - 53: Too many requests
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '404':
-                    description: |-
-                        Not Found
-                        List of supported error codes:
-                        - 60: Resource not found
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '422':
-                    description: |-
-                        Unprocessable entity
-                        Functional error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '500':
-                    description: |-
-                        Internal Server Error
-                        List of supported error codes:
-                        - 1: Internal error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '503':
-                    description: |-
-                        Service Unavailable
-                        List of supported error codes:
-                        - 5: The service is temporarily unavailable
-                        - 6: Orange API is over capacity, retry later !
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-        delete:
-            tags:
-                - Hub
-            operationId: hubDelete
-            summary: delete hub
-            description: |
-                Specific business errors for current operation will be encapsulated in
-                HTTP Response 422 Unprocessable entity
-            deprecated: false
-            parameters:
-                - name: hubId
-                  in: path
-                  required: true
-                  type: string
-                  description: ''
-            responses:
-                '204':
-                    description: Success
-                '400':
-                    description: |-
-                        Bad Request
-                        List of supported error codes:
-                        - 20: Invalid URL parameter value
-                        - 21: Missing body
-                        - 22: Invalid body
-                        - 23: Missing body field
-                        - 24: Invalid body field
-                        - 25: Missing header
-                        - 26: Invalid header value
-                        - 27: Missing query-string parameter
-                        - 28: Invalid query-string parameter value
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '401':
-                    description: |-
-                        Unauthorized
-                        List of supported error codes:
-                        - 40: Missing credentials
-                        - 41: Invalid credentials
-                        - 42: Expired credentials
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '403':
-                    description: |-
-                        Forbidden
-                        List of supported error codes:
-                        - 50: Access denied
-                        - 51: Forbidden requester
-                        - 52: Forbidden user
-                        - 53: Too many requests
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '404':
-                    description: |-
-                        Not Found
-                        List of supported error codes:
-                        - 60: Resource not found
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '422':
-                    description: |-
-                        Unprocessable entity
-                        Functional error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '500':
-                    description: |-
-                        Internal Server Error
-                        List of supported error codes:
-                        - 1: Internal error
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-                '503':
-                    description: |-
-                        Service Unavailable
-                        List of supported error codes:
-                        - 5: The service is temporarily unavailable
-                        - 6: Orange API is over capacity, retry later !
-                    schema:
-                        $ref: '#/definitions/ErrorRepresentation'
-definitions:
-    ErrorRepresentation:
-        description: Error representation
-        required:
-            - code
-            - reason
-        type: object
-        properties:
-            code:
-                description: ''
-                type: integer
-                format: int32
-            reason:
-                description: ''
-                type: string
-            message:
-                description: ''
-                type: string
-            status:
-                description: ''
-                type: string
-            referenceError:
-                description: ''
-                type: string
-            '@type':
-                description: ''
-                type: string
-            '@schemaLocation':
-                description: ''
-                type: string
-    ChannelRef:
-        description: The channel defines the channel for promotion.
-        required:
-            - id
-        type: object
-        properties:
-            id:
-                description: Unique identifier of the channel
-                type: string
-            href:
-                description: Reference of the channel
-                type: string
-            name:
-                description: Name of the channel.
-                type: string
-            '@type':
-                description: Indicates the (class) type of channel
-                type: string
-    Promotion:
-        type: object
-        description: 'Promotion Resource is used to provide the additional discount, voucher, bonus or gift to the customer who meets the pre-defined criteria. Using promotion, the enterprise is able to attract the users and encourage more consumption, especially continuous purchases.   Normally Promotion is not regarded as one type of product or product offering. It is often applied when the customer buys the product offerings with the price or amount surpassing the certain limit.'
-        required:
-          - name
-        properties:
-            description:
-                type: string
-                description: Description of Promotion
-            href:
-                type: string
-                description: Hyperlink to access the promotion.
-            id:
-                type: string
-                description: Unique identifier of Promotion.
-            lastUpdate:
-                type: string
-                format: date-time
-                description: Latest update date of Promotion
-            lifecycleStatus:
-                type: string
-                description: 'Status of Promotion, including DRAFT/TEST/WAIT-FOR-APPROVAL/RELEASE/SUSPEND/RETIREMENT.'
-            name:
-                type: string
-                description: Name of Promotion.
-            type:
-                type: string
-                description: Type of promotion.The basic type is Award/Discount/Reduction. More types can be extended in future.
-            validFor:
-                $ref: '#/definitions/TimePeriod'
-                description: The period for which the promotion is valid.
-            pattern:
+  /promotionQualification:
+    get:
+      tags:
+        - PromotionQualification
+      operationId: promotionQualificationFind
+      summary: find promotionQualification
+      description: |
+        Specific business errors for current operation will be encapsulated in
+        HTTP Response 422 Unprocessable entity
+      deprecated: false
+      parameters:
+        - name: profile
+          required: false
+          in: query
+          description: ""
+          schema:
+            type: string
+        - name: relatedParty.id
+          required: false
+          in: query
+          description: ""
+          schema:
+            type: string
+        - name: channel.id
+          required: false
+          in: query
+          description: ""
+          schema:
+            type: string
+        - name: characteristic
+          required: false
+          in: query
+          description: ""
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+          style: deepObject
+          explode: true
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/PromotionQualification"
+        "400":
+          description: |-
+            Bad Request
+            List of supported error codes:
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "401":
+          description: |-
+            Unauthorized
+            List of supported error codes:
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "403":
+          description: |-
+            Forbidden
+            List of supported error codes:
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "404":
+          description: |-
+            Not Found
+            List of supported error codes:
+            - 60: Resource not found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "422":
+          description: |-
+            Unprocessable entity
+            Functional error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "500":
+          description: |-
+            Internal Server Error
+            List of supported error codes:
+            - 1: Internal error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "503":
+          description: |-
+            Service Unavailable
+            List of supported error codes:
+            - 5: The service is temporarily unavailable
+            - 6: Orange API is over capacity, retry later !
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+  /hub:
+    post:
+      tags:
+        - Hub
+      operationId: hubCreate
+      summary: create hub
+      description: |
+        Specific business errors for current operation will be encapsulated in
+        HTTP Response 422 Unprocessable entity
+      deprecated: false
+      requestBody:
+        $ref: "#/components/requestBodies/Hub"
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Hub"
+        "400":
+          description: |-
+            Bad Request
+            List of supported error codes:
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "401":
+          description: |-
+            Unauthorized
+            List of supported error codes:
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "403":
+          description: |-
+            Forbidden
+            List of supported error codes:
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "404":
+          description: |-
+            Not Found
+            List of supported error codes:
+            - 60: Resource not found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "422":
+          description: |-
+            Unprocessable entity
+            Functional error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "500":
+          description: |-
+            Internal Server Error
+            List of supported error codes:
+            - 1: Internal error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "503":
+          description: |-
+            Service Unavailable
+            List of supported error codes:
+            - 5: The service is temporarily unavailable
+            - 6: Orange API is over capacity, retry later !
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+    get:
+      tags:
+        - Hub
+      operationId: hubFind
+      summary: find hub
+      description: |
+        Specific business errors for current operation will be encapsulated in
+        HTTP Response 422 Unprocessable entity
+      deprecated: false
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json;charset=utf-8:
+              schema:
                 type: array
                 items:
-                    $ref: '#/definitions/PromotionPattern'
-            '@type':
-                type: string
-                description: The class type of the actual resource (for type extension).
-            '@schemaLocation':
-                type: string
-                description: A link to the schema describing a resource (for type extension).
-            '@baseType':
-                type: string
-                description: The base type for use in polymorphic collections
-            characteristic:
-                type: array
-                items:
-                    $ref: '#/definitions/PromotionCharacteristic'
-    TimePeriod:
-        type: object
-        description: A base / value business entity used to represent a period of time between two timepoints.
-        properties:
-            endDateTime:
-                type: string
-                format: date-time
-                description: 'An instant of time, ending at the TimePeriod.'
-            startDateTime:
-                type: string
-                format: date-time
-                description: 'An instant of time, starting at the TimePeriod'
-    PromotionPattern:
-        type: object
-        description: Detailed pattern of the promotion.The pattern decides the conditions of promotion and the benefit of the promotion to be given to the eligible customer.
-        required:
-            - id
-            - name
-        properties:
-            description:
-                type: string
-                description: Description
-            id:
-                type: string
-                description: Unique identifier.
-            name:
-                type: string
-                description: Name
-            priority:
-                type: integer
-                description: Priority. Smaller number means high.
-            relationTypeAmongGroup:
-                type: string
-                description: 'AND/OR ,The logical relation type amongst the promotion criteria group.'
-            validFor:
-                $ref: '#/definitions/TimePeriod'
-                description: The period  for which the promotion pattern  is valid.
-            criteriaGroup:
-                type: array
-                items:
-                    $ref: '#/definitions/PromotionCriteriaGroup'
-            '@type':
-                type: string
-                description: The class type of the actual resource (for type extension).
-            '@schemaLocation':
-                type: string
-                description: A link to the schema describing a resource (for type extension).
-            '@baseType':
-                type: string
-                description: The base type for use in polymorphic collections
-    PromotionCriteriaGroup:
-        type: object
-        description: The group of the criteria of the promotion. The logical relationship between different groups is decided by the relationTypeInGroup.
-        required:
-            - id
-            - relationTypeInGroup
-            - groupName
-        properties:
-            groupName:
-                type: string
-                description: Name of the group.
-            id:
-                type: string
-                description: Unique Identifier
-            relationTypeInGroup:
-                type: string
-                description: 'AND/OR,The logical relation type amongst the various criteria inside a promotion criteria group.'
-            criteria:
-                type: array
-                items:
-                    $ref: '#/definitions/PromotionCriteria'
-            '@type':
-                type: string
-                description: The class type of the actual resource (for type extension).
-            '@schemaLocation':
-                type: string
-                description: A link to the schema describing a resource (for type extension).
-            '@baseType':
-                type: string
-                description: The base type for use in polymorphic collections
-    PromotionCriteria:
-        type: object
-        description: Criteria of the promotion.
-        required:
-            - id
-            - criteriaOperator
-            - criteriaPara
-            - criteriaValue
-        properties:
-            criteriaOperator:
-                type: string
-                description: 'The logic expression including parameter and operator. includeing:=,&gt;,&lt;,&gt;=,&lt;=,&lt;&gt;'
-            criteriaPara:
-                type: string
-                description: The parameter (factor) of the criteria.The basic factors are abstracted from these data sources.There are several detail parameters .
-            criteriaValue:
-                type: string
-                description: The value is filled for the comparison of the criteria.
-            id:
-                type: string
-                description: Unique identifier.
-            '@type':
-                type: string
-                description: The class type of the actual resource (for type extension).
-            '@schemaLocation':
-                type: string
-                description: A link to the schema describing a resource (for type extension).
-            '@baseType':
-                type: string
-                description: The base type for use in polymorphic collections
-    PromotionCharacteristic:
-        description: Characteristics of the promotion to instantiate or to modify
-        required:
-            - name
-        type: object
-        properties:
-            name:
-                description: Name of the characteristic
-                type: string
-            value:
-                description: Value of the characteristic
-                type: string
-            '@type':
-                description: Indicates the (class) type of resource
-                type: string
-            '@schemaLocation':
-                description: This field provided a link to the schema describing this REST resource.
-                type: string
-    RelatedPartyRef:
-        description: A related party defines party or party role linked to a specific entity.
-        required:
-            - id
-        type: object
-        properties:
-            id:
-                description: Unique identifier of a related party
-                type: string
-            href:
-                description: 'Reference of the related party, could be a party reference or a party role reference.'
-                type: string
-            role:
-                description: Role of the related party.
-                type: string
-            name:
-                description: Name of the related party.
-                type: string
-            '@referredType':
-                description: Indicates the base (class) type of the party.
-                type: string
-    PromotionQualificationItem:
-        description: An item of a promotionQualification.
-        required:
-            - id
-        type: object
-        properties:
-            id:
-                description: Id of the promotionQualification item.
-                type: string
-            state:
-                description: 'State of the promotionQualification item (ACKNOWLEDGED, IN-PROGRESS, TERMINATED-WITH-ERROR, DONE).'
-                type: string
-            qualificationItemResult:
-                description: |-
-                    Qualification result for this promotionQualification item. It could be:
-                         - QUALIFIED (request promotion is available),
-                         - UNQUALIFIED (requested not available)
-                type: string
-            '@type':
-                description: Indicates the (class) type of the promotionQualificationItem.
-                type: string
-            '@schemaLocation':
-                description: Link to schema describing this REST resource.
-                type: string
-            promotion:
-                $ref: '#/definitions/Promotion'
-    PromotionQualification:
-        description: 'It allows to retrieve a list of promotion that are commercially available in the context of the interaction (channel, party).'
-        required:
-            - relatedParty
-            - promotionQualificationItem
-        type: object
-        properties:
-            id:
-                description: Unique identifier of the promotionQualification resource.
-                type: string
-            href:
-                description: Hyperlink to access the promotionQualification
-                type: string
-            promotionQualificationDateTime:
-                description: Date when the promotionQualification has been submitted.
-                type: string
-                format: date-time
-            description:
-                description: Description of the promotionQualifcation
-                type: string
-            state:
-                description: 'State of the promotionQualification (ACKNOWLEDGED, IN-PROGRESS, TERMINATED-WITH-ERROR, DONE).'
-                type: string
-            qualificationResult:
-                description: |-
-                    Qualification result for this promotionQualification. It could be:
-                    - QUALIFIED (all qualification item are qualified),
-                    - UNQUALIFIED (At least one item unqualified)
-                type: string
-            effectiveQualificationDate:
-                description: Effective date to promotionQualification completion.
-                type: string
-                format: date-time
-            expirationDate:
-                description: Date the qualification response expires
-                type: string
-                format: date-time
-            provideOnlyAvailable:
-                description: An indicator which when the value is "true" means that only available promotion must be listed in the response.
-                type: boolean
-            '@baseType':
-                description: Indicates the base type of the resource. Here can be 'PromotionQualification'.
-                type: string
-            '@type':
-                description: Indicates the type of resource. Here can be 'PromotionQualification'.
-                type: string
-            '@schemaLocation':
-                description: Link to schema describing this REST resource
-                type: string
-            relatedParty:
-                type: array
-                items:
-                    $ref: '#/definitions/RelatedPartyRef'
-            channel:
-                $ref: '#/definitions/ChannelRef'
-            promotionQualificationItem:
-                type: array
-                items:
-                    $ref: '#/definitions/PromotionQualificationItem'
+                  $ref: "#/components/schemas/Hub"
+        "400":
+          description: |-
+            Bad Request
+            List of supported error codes:
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "401":
+          description: |-
+            Unauthorized
+            List of supported error codes:
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "403":
+          description: |-
+            Forbidden
+            List of supported error codes:
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "404":
+          description: |-
+            Not Found
+            List of supported error codes:
+            - 60: Resource not found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "422":
+          description: |-
+            Unprocessable entity
+            Functional error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "500":
+          description: |-
+            Internal Server Error
+            List of supported error codes:
+            - 1: Internal error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "503":
+          description: |-
+            Service Unavailable
+            List of supported error codes:
+            - 5: The service is temporarily unavailable
+            - 6: Orange API is over capacity, retry later !
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+  "/hub/{hubId}":
+    get:
+      tags:
+        - Hub
+      operationId: hubGet
+      summary: get hub
+      description: |
+        Specific business errors for current operation will be encapsulated in
+        HTTP Response 422 Unprocessable entity
+      deprecated: false
+      parameters:
+        - name: hubId
+          in: path
+          required: true
+          description: ""
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Hub"
+        "400":
+          description: |-
+            Bad Request
+            List of supported error codes:
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "401":
+          description: |-
+            Unauthorized
+            List of supported error codes:
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "403":
+          description: |-
+            Forbidden
+            List of supported error codes:
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "404":
+          description: |-
+            Not Found
+            List of supported error codes:
+            - 60: Resource not found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "422":
+          description: |-
+            Unprocessable entity
+            Functional error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "500":
+          description: |-
+            Internal Server Error
+            List of supported error codes:
+            - 1: Internal error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "503":
+          description: |-
+            Service Unavailable
+            List of supported error codes:
+            - 5: The service is temporarily unavailable
+            - 6: Orange API is over capacity, retry later !
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+    patch:
+      tags:
+        - Hub
+      operationId: hubPatch
+      summary: patch hub
+      description: |
+        Specific business errors for current operation will be encapsulated in
+        HTTP Response 422 Unprocessable entity
+      deprecated: false
+      parameters:
+        - name: hubId
+          in: path
+          required: true
+          description: ""
+          schema:
+            type: string
+      requestBody:
+        $ref: "#/components/requestBodies/Hub"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Hub"
+        "400":
+          description: |-
+            Bad Request
+            List of supported error codes:
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "401":
+          description: |-
+            Unauthorized
+            List of supported error codes:
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "403":
+          description: |-
+            Forbidden
+            List of supported error codes:
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "404":
+          description: |-
+            Not Found
+            List of supported error codes:
+            - 60: Resource not found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "422":
+          description: |-
+            Unprocessable entity
+            Functional error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "500":
+          description: |-
+            Internal Server Error
+            List of supported error codes:
+            - 1: Internal error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "503":
+          description: |-
+            Service Unavailable
+            List of supported error codes:
+            - 5: The service is temporarily unavailable
+            - 6: Orange API is over capacity, retry later !
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+    delete:
+      tags:
+        - Hub
+      operationId: hubDelete
+      summary: delete hub
+      description: |
+        Specific business errors for current operation will be encapsulated in
+        HTTP Response 422 Unprocessable entity
+      deprecated: false
+      parameters:
+        - name: hubId
+          in: path
+          required: true
+          description: ""
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Success
+        "400":
+          description: |-
+            Bad Request
+            List of supported error codes:
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "401":
+          description: |-
+            Unauthorized
+            List of supported error codes:
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "403":
+          description: |-
+            Forbidden
+            List of supported error codes:
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "404":
+          description: |-
+            Not Found
+            List of supported error codes:
+            - 60: Resource not found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "422":
+          description: |-
+            Unprocessable entity
+            Functional error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "500":
+          description: |-
+            Internal Server Error
+            List of supported error codes:
+            - 1: Internal error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+        "503":
+          description: |-
+            Service Unavailable
+            List of supported error codes:
+            - 5: The service is temporarily unavailable
+            - 6: Orange API is over capacity, retry later !
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/ErrorRepresentation"
+servers:
+  - url: https://serverRoot/api/promotionQualificationManagement/v1
+components:
+  requestBodies:
     Hub:
-        description: An HUB resource is used by client side to subscribe to POQ notification(s).
-        required:
-            - callback
-        type: object
-        properties:
-            id:
-                description: identifier of the HUB subscription
-                type: string
-            query:
-                description: Used to specify notification type + additional parameters
-                type: string
-            callback:
-                description: This is the URL where server side must POST event when notification is triggered
-                type: string
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: "#/components/schemas/Hub"
+      required: true
+  schemas:
+    ErrorRepresentation:
+      description: Error representation
+      required:
+        - code
+        - reason
+      type: object
+      properties:
+        code:
+          description: ""
+          type: integer
+          format: int32
+        reason:
+          description: ""
+          type: string
+        message:
+          description: ""
+          type: string
+        status:
+          description: ""
+          type: string
+        referenceError:
+          description: ""
+          type: string
+        "@type":
+          description: ""
+          type: string
+        "@schemaLocation":
+          description: ""
+          type: string
+    ChannelRef:
+      description: The channel defines the channel for promotion.
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          description: Unique identifier of the channel
+          type: string
+        href:
+          description: Reference of the channel
+          type: string
+        name:
+          description: Name of the channel.
+          type: string
+        "@type":
+          description: Indicates the (class) type of channel
+          type: string
+    Promotion:
+      type: object
+      description: Promotion Resource is used to provide the additional discount, voucher,
+        bonus or gift to the customer who meets the pre-defined criteria. Using
+        promotion, the enterprise is able to attract the users and encourage
+        more consumption, especially continuous purchases.   Normally Promotion
+        is not regarded as one type of product or product offering. It is often
+        applied when the customer buys the product offerings with the price or
+        amount surpassing the certain limit.
+      required:
+        - name
+      properties:
+        description:
+          type: string
+          description: Description of Promotion
+        href:
+          type: string
+          description: Hyperlink to access the promotion.
+        id:
+          type: string
+          description: Unique identifier of Promotion.
+        lastUpdate:
+          type: string
+          format: date-time
+          description: Latest update date of Promotion
+        lifecycleStatus:
+          type: string
+          description: Status of Promotion, including
+            DRAFT/TEST/WAIT-FOR-APPROVAL/RELEASE/SUSPEND/RETIREMENT.
+        name:
+          type: string
+          description: Name of Promotion.
+        type:
+          type: string
+          description: Type of promotion.The basic type is Award/Discount/Reduction. More
+            types can be extended in future.
+        validFor:
+          $ref: "#/components/schemas/TimePeriod"
+        pattern:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromotionPattern"
+        "@type":
+          type: string
+          description: The class type of the actual resource (for type extension).
+        "@schemaLocation":
+          type: string
+          description: A link to the schema describing a resource (for type extension).
+        "@baseType":
+          type: string
+          description: The base type for use in polymorphic collections
+        characteristic:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromotionCharacteristic"
+    TimePeriod:
+      type: object
+      description: A base / value business entity used to represent a period of time
+        between two timepoints.
+      properties:
+        endDateTime:
+          type: string
+          format: date-time
+          description: An instant of time, ending at the TimePeriod.
+        startDateTime:
+          type: string
+          format: date-time
+          description: An instant of time, starting at the TimePeriod
+    PromotionPattern:
+      type: object
+      description: Detailed pattern of the promotion.The pattern decides the conditions of
+        promotion and the benefit of the promotion to be given to the eligible
+        customer.
+      required:
+        - id
+        - name
+      properties:
+        description:
+          type: string
+          description: Description
+        id:
+          type: string
+          description: Unique identifier.
+        name:
+          type: string
+          description: Name
+        priority:
+          type: integer
+          description: Priority. Smaller number means high.
+        relationTypeAmongGroup:
+          type: string
+          description: AND/OR ,The logical relation type amongst the promotion criteria
+            group.
+        validFor:
+          $ref: "#/components/schemas/TimePeriod"
+        criteriaGroup:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromotionCriteriaGroup"
+        "@type":
+          type: string
+          description: The class type of the actual resource (for type extension).
+        "@schemaLocation":
+          type: string
+          description: A link to the schema describing a resource (for type extension).
+        "@baseType":
+          type: string
+          description: The base type for use in polymorphic collections
+    PromotionCriteriaGroup:
+      type: object
+      description: The group of the criteria of the promotion. The logical relationship
+        between different groups is decided by the relationTypeInGroup.
+      required:
+        - id
+        - relationTypeInGroup
+        - groupName
+      properties:
+        groupName:
+          type: string
+          description: Name of the group.
+        id:
+          type: string
+          description: Unique Identifier
+        relationTypeInGroup:
+          type: string
+          description: AND/OR,The logical relation type amongst the various criteria inside
+            a promotion criteria group.
+        criteria:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromotionCriteria"
+        "@type":
+          type: string
+          description: The class type of the actual resource (for type extension).
+        "@schemaLocation":
+          type: string
+          description: A link to the schema describing a resource (for type extension).
+        "@baseType":
+          type: string
+          description: The base type for use in polymorphic collections
+    PromotionCriteria:
+      type: object
+      description: Criteria of the promotion.
+      required:
+        - id
+        - criteriaOperator
+        - criteriaPara
+        - criteriaValue
+      properties:
+        criteriaOperator:
+          type: string
+          description: The logic expression including parameter and operator.
+            includeing:=,>,<,>=,<=,<>
+        criteriaPara:
+          type: string
+          description: The parameter (factor) of the criteria.The basic factors are
+            abstracted from these data sources.There are several detail
+            parameters .
+        criteriaValue:
+          type: string
+          description: The value is filled for the comparison of the criteria.
+        id:
+          type: string
+          description: Unique identifier.
+        "@type":
+          type: string
+          description: The class type of the actual resource (for type extension).
+        "@schemaLocation":
+          type: string
+          description: A link to the schema describing a resource (for type extension).
+        "@baseType":
+          type: string
+          description: The base type for use in polymorphic collections
+    PromotionCharacteristic:
+      description: Characteristics of the promotion to instantiate or to modify
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          description: Name of the characteristic
+          type: string
+        value:
+          description: Value of the characteristic
+          type: string
+        "@type":
+          description: Indicates the (class) type of resource
+          type: string
+        "@schemaLocation":
+          description: This field provided a link to the schema describing this REST
+            resource.
+          type: string
+    RelatedPartyRef:
+      description: A related party defines party or party role linked to a specific entity.
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          description: Unique identifier of a related party
+          type: string
+        href:
+          description: Reference of the related party, could be a party reference or a
+            party role reference.
+          type: string
+        role:
+          description: Role of the related party.
+          type: string
+        name:
+          description: Name of the related party.
+          type: string
+        "@referredType":
+          description: Indicates the base (class) type of the party.
+          type: string
+    PromotionQualificationItem:
+      description: An item of a promotionQualification.
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          description: Id of the promotionQualification item.
+          type: string
+        state:
+          description: State of the promotionQualification item (ACKNOWLEDGED, IN-PROGRESS,
+            TERMINATED-WITH-ERROR, DONE).
+          type: string
+        qualificationItemResult:
+          description: >-
+            Qualification result for this promotionQualification item. It could
+            be:
+                 - QUALIFIED (request promotion is available),
+                 - UNQUALIFIED (requested not available)
+          type: string
+        "@type":
+          description: Indicates the (class) type of the promotionQualificationItem.
+          type: string
+        "@schemaLocation":
+          description: Link to schema describing this REST resource.
+          type: string
+        promotion:
+          $ref: "#/components/schemas/Promotion"
+    PromotionQualification:
+      description: It allows to retrieve a list of promotion that are commercially
+        available in the context of the interaction (channel, party).
+      required:
+        - relatedParty
+        - promotionQualificationItem
+      type: object
+      properties:
+        id:
+          description: Unique identifier of the promotionQualification resource.
+          type: string
+        href:
+          description: Hyperlink to access the promotionQualification
+          type: string
+        promotionQualificationDateTime:
+          description: Date when the promotionQualification has been submitted.
+          type: string
+          format: date-time
+        description:
+          description: Description of the promotionQualifcation
+          type: string
+        state:
+          description: State of the promotionQualification (ACKNOWLEDGED, IN-PROGRESS,
+            TERMINATED-WITH-ERROR, DONE).
+          type: string
+        qualificationResult:
+          description: |-
+            Qualification result for this promotionQualification. It could be:
+            - QUALIFIED (all qualification item are qualified),
+            - UNQUALIFIED (At least one item unqualified)
+          type: string
+        effectiveQualificationDate:
+          description: Effective date to promotionQualification completion.
+          type: string
+          format: date-time
+        expirationDate:
+          description: Date the qualification response expires
+          type: string
+          format: date-time
+        provideOnlyAvailable:
+          description: An indicator which when the value is "true" means that only
+            available promotion must be listed in the response.
+          type: boolean
+        "@baseType":
+          description: Indicates the base type of the resource. Here can be
+            'PromotionQualification'.
+          type: string
+        "@type":
+          description: Indicates the type of resource. Here can be 'PromotionQualification'.
+          type: string
+        "@schemaLocation":
+          description: Link to schema describing this REST resource
+          type: string
+        relatedParty:
+          type: array
+          items:
+            $ref: "#/components/schemas/RelatedPartyRef"
+        channel:
+          $ref: "#/components/schemas/ChannelRef"
+        promotionQualificationItem:
+          type: array
+          items:
+            $ref: "#/components/schemas/PromotionQualificationItem"
+    Hub:
+      description: An HUB resource is used by client side to subscribe to POQ
+        notification(s).
+      required:
+        - callback
+      type: object
+      properties:
+        id:
+          description: identifier of the HUB subscription
+          type: string
+        query:
+          description: Used to specify notification type + additional parameters
+          type: string
+        callback:
+          description: This is the URL where server side must POST event when notification
+            is triggered
+          type: string
