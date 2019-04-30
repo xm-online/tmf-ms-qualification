@@ -45,8 +45,6 @@ paths:
           description: ""
           schema:
             type: object
-            additionalProperties:
-              type: string
           style: deepObject
           explode: true
       responses:
