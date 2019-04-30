@@ -4,6 +4,7 @@ import com.icthh.xm.commons.lep.LogicExtensionPoint;
 import com.icthh.xm.commons.lep.spring.LepService;
 import com.icthh.xm.tmf.ms.qualification.lep.keyresolver.ProfileKeyResolver;
 import com.icthh.xm.tmf.ms.qualification.web.api.PromotionQualificationApiDelegate;
+import com.icthh.xm.tmf.ms.qualification.web.api.model.Characteristic;
 import com.icthh.xm.tmf.ms.qualification.web.api.model.PromotionQualification;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class PromotionQualificationDelegate implements PromotionQualificationApi
     public ResponseEntity<PromotionQualification> promotionQualificationFind(String profile,
                                                                              String relatedPartyId,
                                                                              String channelId,
-                                                                             Object characteristic) {
+                                                                             Characteristic characteristic) {
         return ResponseEntity.ok(new PromotionQualification());
     }
 }

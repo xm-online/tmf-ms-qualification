@@ -42,10 +42,13 @@ paths:
         - name: characteristic
           required: false
           in: query
-          description: ""
           schema:
             type: object
-          style: deepObject
+            properties:
+              characteristic:
+                type: object
+                additionalProperties:
+                  type: string
           explode: true
       responses:
         "200":
