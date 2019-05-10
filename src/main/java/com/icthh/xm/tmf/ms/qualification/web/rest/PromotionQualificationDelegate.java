@@ -18,7 +18,7 @@ public class PromotionQualificationDelegate implements PromotionQualificationApi
 
     @Timed
     @LogicExtensionPoint(value = "PromotionQualificationFind", resolver = ProfileKeyResolver.class)
-    @PreAuthorize("hasPermission({}, 'QUALIFICATION.PROMOTION.GET')")
+    @PreAuthorize("hasPermission({'profile': #profile, 'relatedPartyId': #relatedPartyId, 'channelId': #channelId}, 'QUALIFICATION.PROMOTION.GET')")
     @Override
     public ResponseEntity<PromotionQualification> promotionQualificationFind(String profile,
                                                                              String relatedPartyId,
