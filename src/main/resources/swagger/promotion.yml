@@ -39,16 +39,6 @@ paths:
           description: ""
           schema:
             type: string
-        - name: characteristic
-          required: false
-          in: query
-          description: ""
-          schema:
-            type: object
-            additionalProperties:
-              type: string
-          style: deepObject
-          explode: true
       responses:
         "200":
           description: Success
