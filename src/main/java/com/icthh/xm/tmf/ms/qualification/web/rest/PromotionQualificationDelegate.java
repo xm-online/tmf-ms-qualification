@@ -2,7 +2,7 @@ package com.icthh.xm.tmf.ms.qualification.web.rest;
 
 import com.icthh.xm.commons.lep.LogicExtensionPoint;
 import com.icthh.xm.commons.lep.spring.LepService;
-import com.icthh.xm.tmf.ms.qualification.lep.keyresolver.ProfileKeyResolver;
+import com.icthh.xm.tmf.ms.qualification.lep.keyresolver.ProfileChannelKeyResolver;
 import com.icthh.xm.tmf.ms.qualification.web.api.PromotionQualificationApiDelegate;
 import com.icthh.xm.tmf.ms.qualification.web.api.model.PromotionQualification;
 import io.micrometer.core.annotation.Timed;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class PromotionQualificationDelegate implements PromotionQualificationApiDelegate {
 
     @Timed
-    @LogicExtensionPoint(value = "PromotionQualificationFind", resolver = ProfileKeyResolver.class)
+    @LogicExtensionPoint(value = "PromotionQualificationFind", resolver = ProfileChannelKeyResolver.class)
     @PreAuthorize("hasPermission({'profile': #profile, 'relatedPartyId': #relatedPartyId, 'channelId': #channelId}, 'QUALIFICATION.PROMOTION.GET')")
     @Override
     public ResponseEntity<PromotionQualification> promotionQualificationFind(String profile,
