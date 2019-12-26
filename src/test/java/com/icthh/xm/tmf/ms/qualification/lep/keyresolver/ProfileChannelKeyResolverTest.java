@@ -2,8 +2,13 @@ package com.icthh.xm.tmf.ms.qualification.lep.keyresolver;
 
 import com.icthh.xm.commons.lep.XmLepConstants;
 import com.icthh.xm.commons.lep.spring.LepServiceHandler;
-import com.icthh.xm.lep.api.*;
+import com.icthh.xm.lep.api.LepKey;
+import com.icthh.xm.lep.api.LepKeyResolver;
+import com.icthh.xm.lep.api.LepMethod;
+import com.icthh.xm.lep.api.Version;
+import com.icthh.xm.lep.api.LepManager;
 import com.icthh.xm.lep.core.CoreLepManager;
+import com.icthh.xm.tmf.ms.qualification.lep.keyresolver.ProfileChannelKeyResolver;
 import com.icthh.xm.tmf.ms.qualification.web.rest.PromotionQualificationDelegate;
 import org.junit.Test;
 import org.junit.runner.RunWith;

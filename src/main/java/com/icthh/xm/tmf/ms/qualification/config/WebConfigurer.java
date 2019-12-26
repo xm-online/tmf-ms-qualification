@@ -20,6 +20,7 @@ import javax.servlet.ServletRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
 import org.springframework.boot.web.server.MimeMappings;
 import org.springframework.boot.web.server.WebServerFactory;
@@ -47,12 +48,18 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
     private final JHipsterProperties jHipsterProperties;
 
+    private final ServerProperties serverProperties;
+
     private MetricRegistry metricRegistry;
 
-    public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties, ObjectMapper objectMapper) {
+    public WebConfigurer(Environment env,
+                         JHipsterProperties jHipsterProperties,
+                         ServerProperties serverProperties,
+                         ObjectMapper objectMapper) {
 
         this.env = env;
         this.jHipsterProperties = jHipsterProperties;
+        this.serverProperties = serverProperties;
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     }
@@ -80,11 +87,10 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         /*
          * Enable HTTP/2 for Undertow - https://twitter.com/ankinson/status/829256167700492288
          * HTTP/2 requires HTTPS, so HTTP requests will fallback to HTTP/1.1.
-         * See the JHipsterProperties class and your application-*.yml configuration files
+         * See the ServerProperties instead of JHipsterProperties class and your application-*.yml configuration files
          * for more information.
          */
-        if (jHipsterProperties.getHttp().getVersion().equals(JHipsterProperties.Http.Version.V_2_0) &&
-            server instanceof UndertowServletWebServerFactory) {
+        if (serverProperties.getHttp2().isEnabled() && server instanceof UndertowServletWebServerFactory) {
 
             ((UndertowServletWebServerFactory) server)
                 .addBuilderCustomizers(builder ->
