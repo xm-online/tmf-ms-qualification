@@ -317,7 +317,7 @@ dependencies {
     testImplementation "org.hamcrest:hamcrest-library"
     testImplementation "com.h2database:h2"
     liquibaseRuntime "com.h2database:h2"
-    implementation "org.openapitools:jackson-databind-nullable:0.1.0"
+    implementation "org.openapitools:jackson-databind-nullable:${jackson_databind_nullable_version}"
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 
