@@ -20,7 +20,6 @@ plugins {
     id "org.springframework.boot"
     id "com.google.cloud.tools.jib"
     id "com.gorylenko.gradle-git-properties"
-    //id "org.openapi.generator"
     id "net.ltgt.apt-eclipse"
     id "net.ltgt.apt-idea"
     id "net.ltgt.apt"
@@ -29,6 +28,8 @@ plugins {
     id "io.spring.nohttp"
     id "com.github.spotbugs"
     id "pmd"
+    id 'checkstyle'
+    id 'war'
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
@@ -96,7 +97,14 @@ if (OperatingSystem.current().isWindows()) {
     }
 }
 
-defaultTasks "bootRun"
+bootWar {
+    mainClassName = 'com.icthh.xm.tmf.ms.qualification.QualificationApp'
+}
+
+war {
+}
+
+defaultTasks "bootWar"
 
 springBoot {
     mainClassName = "com.icthh.xm.tmf.ms.qualification.QualificationApp"
@@ -180,9 +188,9 @@ pmd {
 }
 
 checkstyle {
-    toolVersion '${checkstyle_version}'
-    configFile file("checkstyle.xml")
-    checkstyleTest.enabled = false
+    toolVersion = "${checkstyle_version}"
+    ignoreFailures = true
+    configFile = rootProject.file('./qa/checkstyle.xml')
 }
 spotbugs {
     ignoreFailures = true
