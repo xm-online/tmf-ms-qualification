@@ -5,6 +5,10 @@ dependencies {
     testImplementation "com.h2database:h2"
 }
 
+ext {
+    logbackLoglevel = "INFO"
+}
+
 def profiles = "prod"
 if (project.hasProperty("no-liquibase")) {
     profiles += ",no-liquibase"
@@ -34,6 +38,11 @@ processResources {
     filesMatching("**/bootstrap.yml") {
         filter {
             it.replace("#spring.profiles.active#", profiles)
+        }
+    }
+    filesMatching('**/logback-spring.xml') {
+        filter {
+            it.replace('#logback.loglevel#', logbackLoglevel)
         }
     }
 }

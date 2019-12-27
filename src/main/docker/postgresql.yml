@@ -1,11 +1,11 @@
 version: '2'
 services:
-  qualification-postgresql:
-    image: postgres:11.5
-    # volumes:
-    #     - ~/volumes/jhipster/qualification/postgresql/:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=qualification
-      - POSTGRES_PASSWORD=
-    ports:
-      - 5432:5432
+    qualification-postgresql:
+        image: postgres:11.5
+        # volumes:
+        #     - ~/volumes/jhipster/qualification/postgresql/:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=qualification
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432

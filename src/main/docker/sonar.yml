@@ -1,7 +1,7 @@
 version: '2'
 services:
-  qualification-sonar:
-    image: sonarqube:7.9.1-community
-    ports:
-      - 9001:9000
-      - 9092:9092
+    qualification-sonar:
+        image: sonarqube:7.9.1-community
+        ports:
+            - 9001:9000
+            - 9092:9092
