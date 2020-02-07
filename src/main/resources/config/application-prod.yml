@@ -19,12 +19,6 @@ logging:
     io.github.jhipster: INFO
     com.icthh.xm.tmf.ms.qualification: INFO
 
-management:
-  metrics:
-    export:
-      prometheus:
-        enabled: false
-
 spring:
   devtools:
     restart:
