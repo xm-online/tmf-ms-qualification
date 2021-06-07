@@ -1,7 +1,5 @@
 package com.icthh.xm.tmf.ms.qualification.web.rest;
 
-import static com.icthh.xm.tmf.ms.qualification.web.rest.TestController.EXPECTED_CODE;
-import static com.icthh.xm.tmf.ms.qualification.web.rest.TestController.EXPECTED_MESSAGE;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -15,24 +13,22 @@ import com.icthh.xm.tmf.ms.qualification.QualificationApp;
 import com.icthh.xm.tmf.ms.qualification.config.SecurityBeanOverrideConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = {SecurityBeanOverrideConfiguration.class, QualificationApp.class})
-class ExceptionTranslatorTest {
+@SpringBootTest(classes = {SecurityBeanOverrideConfiguration.class,
+    QualificationApp.class, ExceptionTranslatorTest.TestController.class})
+public class ExceptionTranslatorTest {
+    public static final String EXPECTED_CODE = "expected.code";
+    public static final String EXPECTED_MESSAGE = "expected.message";
 
-
-    MockMvc mockMvc;
     @MockBean
     LocalizationMessageService localizationMessageService;
     @Autowired
@@ -41,6 +37,8 @@ class ExceptionTranslatorTest {
     private ExceptionTranslator exceptionTranslator;
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+
+    MockMvc mockMvc;
 
     @BeforeEach
     public void setup() {
@@ -51,7 +49,7 @@ class ExceptionTranslatorTest {
     }
 
     @Test
-    void shouldReturnNotImplemented() throws Exception {
+    void shouldReturnBadRequestWhenBusinessExceptionThrown() throws Exception {
         when(localizationMessageService.getMessage(any(), any(), any(Boolean.class), any())).thenReturn(EXPECTED_MESSAGE);
 
         mockMvc.perform(get("/test"))
@@ -59,17 +57,14 @@ class ExceptionTranslatorTest {
             .andExpect(jsonPath("$.error").value(EXPECTED_CODE))
             .andExpect(jsonPath("$.error_description").value(EXPECTED_MESSAGE));
     }
-}
 
-@RestController
-@RequestMapping("/test")
-class TestController {
+    @RestController
+    @RequestMapping("/test")
+    static class TestController {
 
-    public static final String EXPECTED_CODE = "expected.code";
-    public static final String EXPECTED_MESSAGE = "expected.message";
-
-    @GetMapping
-    public void get() {
-        throw new BusinessException(EXPECTED_CODE, EXPECTED_MESSAGE);
+        @GetMapping
+        public void get() {
+            throw new BusinessException(EXPECTED_CODE, EXPECTED_MESSAGE);
+        }
     }
 }
