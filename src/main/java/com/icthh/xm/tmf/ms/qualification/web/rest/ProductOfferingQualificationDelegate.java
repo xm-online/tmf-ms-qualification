@@ -8,6 +8,7 @@ import com.icthh.xm.tmf.ms.qualification.web.api.ProductOfferingQualificationApi
 import com.icthh.xm.tmf.ms.qualification.web.api.model.ProductOfferingQualification;
 import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,6 @@ public class ProductOfferingQualificationDelegate implements ProductOfferingQual
     @PrivilegeDescription("Privilege to get a product offering qualification")
     @PreAuthorize("hasPermission({'profile': @headerRequestExtractor.get('profile')}, 'QUALIFICATION.PRODUCT.OFFERING.GET')")
     public ResponseEntity<ProductOfferingQualification> productOfferingQualificationGet(String productOfferingQualificationId) {
-        return ResponseEntity.ok(new ProductOfferingQualification());
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 }
