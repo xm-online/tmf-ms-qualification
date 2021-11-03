@@ -5,6 +5,7 @@ import com.icthh.xm.commons.lep.spring.LepService;
 import com.icthh.xm.commons.permission.annotation.PrivilegeDescription;
 import com.icthh.xm.tmf.ms.qualification.lep.keyresolver.ProfileKeyResolver;
 import com.icthh.xm.tmf.ms.qualification.web.api.ProductOfferingQualificationApiDelegate;
+import com.icthh.xm.tmf.ms.qualification.web.api.model.POSTREQProductOfferingQualification;
 import com.icthh.xm.tmf.ms.qualification.web.api.model.ProductOfferingQualification;
 import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,15 @@ public class ProductOfferingQualificationDelegate implements ProductOfferingQual
     @PrivilegeDescription("Privilege to get a product offering qualification")
     @PreAuthorize("hasPermission({'profile': @headerRequestExtractor.get('profile')}, 'QUALIFICATION.PRODUCT.OFFERING.GET')")
     public ResponseEntity<ProductOfferingQualification> productOfferingQualificationGet(String productOfferingQualificationId) {
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+    }
+
+    @Timed
+    @Override
+    @LogicExtensionPoint(value = "ProductOfferingQualificationCreate", resolver = ProfileKeyResolver.class)
+    @PrivilegeDescription("Privilege to create a product offering qualification")
+    @PreAuthorize("hasPermission({'profile': @headerRequestExtractor.get('profile')}, 'QUALIFICATION.PRODUCT.OFFERING.CREATE')")
+    public ResponseEntity<ProductOfferingQualification> productOfferingQualificationCreate(POSTREQProductOfferingQualification productOfferingQualification) {
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 }
