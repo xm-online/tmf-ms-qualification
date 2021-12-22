@@ -1,6 +1,7 @@
 package com.icthh.xm.tmf.ms.qualification.lep;
 
 import static com.icthh.xm.tmf.ms.qualification.lep.LepXmAccountMsConstants.BINDING_KEY_COMMONS;
+import static com.icthh.xm.tmf.ms.qualification.lep.LepXmAccountMsConstants.BINDING_KEY_METER_REGISTRY;
 import static com.icthh.xm.tmf.ms.qualification.lep.LepXmAccountMsConstants.BINDING_KEY_SERVICES;
 import static com.icthh.xm.tmf.ms.qualification.lep.LepXmAccountMsConstants.BINDING_KEY_TEMPLATES;
 import static com.icthh.xm.tmf.ms.qualification.lep.LepXmAccountMsConstants.BINDING_SUB_KEY_PERMISSION_SERVICE;
@@ -13,6 +14,7 @@ import com.icthh.xm.commons.lep.commons.CommonsService;
 import com.icthh.xm.commons.lep.spring.SpringLepProcessingApplicationListener;
 import com.icthh.xm.commons.permission.service.PermissionCheckService;
 import com.icthh.xm.lep.api.ScopedContext;
+import io.micrometer.core.instrument.MeterRegistry;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ public class XmMsLepProcessingApplicationListener extends SpringLepProcessingApp
     private final CommonsService commonsService;
     private final PermissionCheckService permissionCheckService;
 
+    private final MeterRegistry meterRegistry;
 
     @Override
     protected void bindExecutionContext(ScopedContext executionContext) {
@@ -42,6 +45,7 @@ public class XmMsLepProcessingApplicationListener extends SpringLepProcessingApp
 
         executionContext.setValue(BINDING_KEY_COMMONS, new CommonsExecutor(commonsService));
         executionContext.setValue(BINDING_KEY_SERVICES, services);
+        executionContext.setValue(BINDING_KEY_METER_REGISTRY, meterRegistry);
 
         // templates
         Map<String, Object> templates = new HashMap<>();
