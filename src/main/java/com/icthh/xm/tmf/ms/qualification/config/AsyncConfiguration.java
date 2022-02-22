@@ -4,10 +4,12 @@ import io.github.jhipster.async.ExceptionHandlingAsyncTaskExecutor;
 import io.github.jhipster.config.JHipsterProperties;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.cloud.sleuth.instrument.async.LazyTraceExecutor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -17,18 +19,15 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
+@Slf4j
 @Configuration
 @EnableAsync
 @EnableScheduling
+@RequiredArgsConstructor
 public class AsyncConfiguration implements AsyncConfigurer, SchedulingConfigurer {
 
-    private final Logger log = LoggerFactory.getLogger(AsyncConfiguration.class);
-
     private final JHipsterProperties jHipsterProperties;
-
-    public AsyncConfiguration(JHipsterProperties jHipsterProperties) {
-        this.jHipsterProperties = jHipsterProperties;
-    }
+    private final BeanFactory beanFactory;
 
     @Override
     @Bean(name = "taskExecutor")
@@ -39,7 +38,7 @@ public class AsyncConfiguration implements AsyncConfigurer, SchedulingConfigurer
         executor.setMaxPoolSize(jHipsterProperties.getAsync().getMaxPoolSize());
         executor.setQueueCapacity(jHipsterProperties.getAsync().getQueueCapacity());
         executor.setThreadNamePrefix("qualification-Executor-");
-        return new ExceptionHandlingAsyncTaskExecutor(executor);
+        return new LazyTraceExecutor(this.beanFactory, new ExceptionHandlingAsyncTaskExecutor(executor));
     }
 
     @Override
