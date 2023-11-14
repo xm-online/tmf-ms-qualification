@@ -45,8 +45,8 @@ public class ApplicationProperties {
     @Getter
     @Setter
     public static class RestTemplateProperties {
-        private int connectionRequestTimeout;
-        private int connectTimeout;
-        private int readTimeout;
+        private Integer connectionRequestTimeout;
+        private Integer connectTimeout;
+        private Integer readTimeout;
     }
 }

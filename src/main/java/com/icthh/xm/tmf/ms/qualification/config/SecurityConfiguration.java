@@ -1,11 +1,12 @@
 package com.icthh.xm.tmf.ms.qualification.config;
 
+import static java.util.Optional.ofNullable;
+
 import com.icthh.xm.commons.permission.constants.RoleConstant;
 import com.icthh.xm.commons.security.oauth2.ConfigSignatureVerifierClient;
 import com.icthh.xm.commons.security.oauth2.OAuth2JwtAccessTokenConverter;
 import com.icthh.xm.commons.security.oauth2.OAuth2Properties;
 import com.icthh.xm.commons.security.oauth2.OAuth2SignatureVerifierClient;
-import com.icthh.xm.tmf.ms.qualification.config.ApplicationProperties.RestTemplateProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.loadbalancer.RestTemplateCustomizer;
@@ -63,14 +64,15 @@ public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
     @Bean
 	@Qualifier("loadBalancedRestTemplate")
     public RestTemplate loadBalancedRestTemplate(RestTemplateCustomizer customizer) {
-        HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        RestTemplateProperties restTemplateProperties = applicationProperties.getLoadBalancedRestTemplate();
-        httpRequestFactory.setConnectionRequestTimeout(restTemplateProperties.getConnectionRequestTimeout());
-        httpRequestFactory.setConnectTimeout(restTemplateProperties.getConnectTimeout());
-        httpRequestFactory.setReadTimeout(restTemplateProperties.getReadTimeout());
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        ofNullable(applicationProperties.getLoadBalancedRestTemplate()).ifPresent(properties -> {
+            ofNullable(properties.getConnectionRequestTimeout()).ifPresent(requestFactory::setConnectionRequestTimeout);
+            ofNullable(properties.getConnectTimeout()).ifPresent(requestFactory::setConnectTimeout);
+            ofNullable(properties.getReadTimeout()).ifPresent(requestFactory::setReadTimeout);
+        });
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setRequestFactory(httpRequestFactory);
+        restTemplate.setRequestFactory(requestFactory);
         customizer.customize(restTemplate);
         return restTemplate;
     }
