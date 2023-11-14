@@ -5,10 +5,13 @@ import com.icthh.xm.commons.security.oauth2.ConfigSignatureVerifierClient;
 import com.icthh.xm.commons.security.oauth2.OAuth2JwtAccessTokenConverter;
 import com.icthh.xm.commons.security.oauth2.OAuth2Properties;
 import com.icthh.xm.commons.security.oauth2.OAuth2SignatureVerifierClient;
+import com.icthh.xm.tmf.ms.qualification.config.ApplicationProperties.RestTemplateProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.loadbalancer.RestTemplateCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,13 +24,11 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableResourceServer
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
     private final OAuth2Properties oAuth2Properties;
-
-    public SecurityConfiguration(OAuth2Properties oAuth2Properties) {
-        this.oAuth2Properties = oAuth2Properties;
-    }
+    private final ApplicationProperties applicationProperties;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -62,7 +63,14 @@ public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
     @Bean
 	@Qualifier("loadBalancedRestTemplate")
     public RestTemplate loadBalancedRestTemplate(RestTemplateCustomizer customizer) {
+        HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+        RestTemplateProperties restTemplateProperties = applicationProperties.getLoadBalancedRestTemplate();
+        httpRequestFactory.setConnectionRequestTimeout(restTemplateProperties.getConnectionRequestTimeout());
+        httpRequestFactory.setConnectTimeout(restTemplateProperties.getConnectTimeout());
+        httpRequestFactory.setReadTimeout(restTemplateProperties.getReadTimeout());
+
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setRequestFactory(httpRequestFactory);
         customizer.customize(restTemplate);
         return restTemplate;
     }

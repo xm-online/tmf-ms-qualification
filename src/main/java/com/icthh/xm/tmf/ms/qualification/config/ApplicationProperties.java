@@ -26,6 +26,7 @@ public class ApplicationProperties {
     private List<String> tenantIgnoredPathList = Collections.emptyList();
     private boolean timelinesEnabled;
     private final Retry retry = new Retry();
+    private RestTemplateProperties loadBalancedRestTemplate;
 
     @Getter
     @Setter
@@ -39,5 +40,13 @@ public class ApplicationProperties {
         private int maxAttempts;
         private long delay;
         private int multiplier;
+    }
+
+    @Getter
+    @Setter
+    public static class RestTemplateProperties {
+        private int connectionRequestTimeout;
+        private int connectTimeout;
+        private int readTimeout;
     }
 }
