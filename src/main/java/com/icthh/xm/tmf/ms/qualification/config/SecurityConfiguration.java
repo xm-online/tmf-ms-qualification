@@ -1,14 +1,18 @@
 package com.icthh.xm.tmf.ms.qualification.config;
 
+import static java.util.Optional.ofNullable;
+
 import com.icthh.xm.commons.permission.constants.RoleConstant;
 import com.icthh.xm.commons.security.oauth2.ConfigSignatureVerifierClient;
 import com.icthh.xm.commons.security.oauth2.OAuth2JwtAccessTokenConverter;
 import com.icthh.xm.commons.security.oauth2.OAuth2Properties;
 import com.icthh.xm.commons.security.oauth2.OAuth2SignatureVerifierClient;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.loadbalancer.RestTemplateCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,13 +25,11 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableResourceServer
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
     private final OAuth2Properties oAuth2Properties;
-
-    public SecurityConfiguration(OAuth2Properties oAuth2Properties) {
-        this.oAuth2Properties = oAuth2Properties;
-    }
+    private final ApplicationProperties applicationProperties;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -62,7 +64,15 @@ public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
     @Bean
 	@Qualifier("loadBalancedRestTemplate")
     public RestTemplate loadBalancedRestTemplate(RestTemplateCustomizer customizer) {
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        ofNullable(applicationProperties.getLoadBalancedRestTemplate()).ifPresent(properties -> {
+            ofNullable(properties.getConnectionRequestTimeout()).ifPresent(requestFactory::setConnectionRequestTimeout);
+            ofNullable(properties.getConnectTimeout()).ifPresent(requestFactory::setConnectTimeout);
+            ofNullable(properties.getReadTimeout()).ifPresent(requestFactory::setReadTimeout);
+        });
+
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setRequestFactory(requestFactory);
         customizer.customize(restTemplate);
         return restTemplate;
     }
