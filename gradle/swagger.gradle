@@ -24,6 +24,8 @@ task openApiGenerateOffering(type: org.openapitools.generator.gradle.plugin.task
     configOptions = [delegatePattern: "true"]
     validateSpec = true
     importMappings = [Problem:"org.zalando.problem.Problem"]
+    // copied from https://github.com/OpenAPITools/openapi-generator/blob/v4.2.2/modules/openapi-generator/src/main/resources/JavaSpring/pojo.mustache
+    templateDir = "$rootDir/src/main/resources/openapi/mustache/JavaSpring"
 }
 
 task openApiGeneratePromotion(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
@@ -38,6 +40,7 @@ task openApiGeneratePromotion(type: org.openapitools.generator.gradle.plugin.tas
     configOptions = [delegatePattern: "true"]
     validateSpec = true
     importMappings = [Problem:"org.zalando.problem.Problem"]
+    templateDir = "$rootDir/src/main/resources/openapi/mustache/JavaSpring"
 }
 
 sourceSets {
