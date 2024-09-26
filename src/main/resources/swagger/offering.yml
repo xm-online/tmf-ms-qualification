@@ -1070,6 +1070,7 @@ definitions:
     Place:
         description: Describe a place (using either geographicAddress or GeographicLocation) and/or identify an existing place (either an existing geographicAddress or existing GeographicLocation or existing GeographicSite) through its id.
         type: object
+        discriminator: '@referredType'
         properties:
             id:
                 description: Must be a geographicAddress id or GeographicLocation id or GeographicSite id
@@ -1088,6 +1089,68 @@ definitions:
                 type: string
             '@schemaLocation':
                 description: A link to the schema describing this REST resource.
+                type: string
+    GeographicAddress:
+        type: object
+        description: A geographic address is a specialization of the abstract Place entity
+        allOf:
+            -  $ref: '#/definitions/Place'
+            -  type: object
+               properties:
+                   city:
+                       description: A string. City that the address is in.
+                       type: string
+                   country:
+                        description: Country that the address is in.
+                        type: string
+                   stateOrProvince:
+                       description: A string. An area of defined or undefined boundaries within a local authority or other
+                                    legislatively defined area, usually rural or semi-rural in nature. [ANZLIC-STREET], or a
+                                    suburb, a bounded locality within a city, town or shire principally of urban character [ANZLICSTREET].
+                       type: string
+                   locality:
+                       description: A string. the State or Province that the address is in.
+                       type: string
+                   postcode:
+                       description: A string. descriptor for a postal delivery area, used to speed and simplify the delivery of mail (also known as zipcode).
+                       type: string
+                   streetName:
+                       description: A string. Name of the street or other street type.
+                       type: string
+                   streetNr:
+                       description: A string. Number identifying a specific property on a public street.
+                       type: string
+                   streetType:
+                       description: A string. alley, avenue, boulevard, brae, crescent, drive, highway, lane, terrace, parade, place, tarn, way, wharf.
+                       type: string
+    DynamicAddress:
+        type: object
+        description: A custom address is a specialization of the abstract Place entity
+        allOf:
+            -   $ref: '#/definitions/Place'
+            -   type: object
+                properties:
+                    characteristic:
+                        type: array
+                        items:
+                            $ref: '#/definitions/AddressCharacteristic'
+    AddressCharacteristic:
+        description: Characteristics of the address
+        required:
+            - name
+        type: object
+        properties:
+            name:
+                description: Name of the characteristic
+                type: string
+            value:
+                description: Value of the characteristic
+                type: string
+            '@type':
+                description: Indicates the (class) type of resource
+                type: string
+            '@schemaLocation':
+                description: This field provided a link to the schema describing this REST resource.
                 type: string
     QualificationItemRelationship:
         description: Used to describe link(s) to other items to the one qualified.
