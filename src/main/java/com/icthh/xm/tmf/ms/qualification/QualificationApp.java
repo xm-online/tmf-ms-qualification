@@ -1,5 +1,10 @@
 package com.icthh.xm.tmf.ms.qualification;
 
+import com.icthh.xm.commons.logging.util.MdcUtils;
+import com.icthh.xm.commons.tenant.TenantContextHolder;
+import com.icthh.xm.commons.tenant.TenantContextUtils;
+import com.icthh.xm.commons.tenant.TenantKey;
+import com.icthh.xm.commons.tenant.spring.config.TenantContextConfiguration;
 import com.icthh.xm.tmf.ms.qualification.config.ApplicationProperties;
 import com.icthh.xm.tmf.ms.qualification.config.DefaultProfileUtil;
 import io.github.jhipster.config.JHipsterConstants;
@@ -12,25 +17,27 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 
-@SpringBootApplication(scanBasePackages = { "com.icthh.xm", "com.icthh.xm.tmf.ms.qualification" })
-@EnableAutoConfiguration
+@SpringBootApplication(scanBasePackages = {"com.icthh.xm.tmf.ms.qualification", "com.icthh.xm"})
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 @EnableDiscoveryClient
+@Import({TenantContextConfiguration.class})
 public class QualificationApp {
 
     private static final Logger log = LoggerFactory.getLogger(QualificationApp.class);
 
     private final Environment env;
+    private final TenantContextHolder tenantContextHolder;
 
-    public QualificationApp(Environment env) {
+    public QualificationApp(Environment env, TenantContextHolder tenantContextHolder) {
         this.env = env;
+        this.tenantContextHolder = tenantContextHolder;
     }
 
     /**
@@ -51,6 +58,15 @@ public class QualificationApp {
             log.error("You have misconfigured your application! It should not " +
                 "run with both the 'dev' and 'cloud' profiles at the same time.");
         }
+        initContexts();
+    }
+
+    private void initContexts() {
+        // init tenant context, by default this is XM super tenant
+        TenantContextUtils.setTenant(tenantContextHolder, TenantKey.SUPER);
+
+        // init logger MDC context
+        MdcUtils.putRid(MdcUtils.generateRid() + "::" + TenantKey.SUPER.getValue());
     }
 
     /**

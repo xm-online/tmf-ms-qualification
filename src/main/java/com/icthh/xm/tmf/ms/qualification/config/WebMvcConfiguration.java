@@ -2,6 +2,7 @@ package com.icthh.xm.tmf.ms.qualification.config;
 
 import com.icthh.xm.commons.lep.spring.web.LepInterceptor;
 import com.icthh.xm.commons.web.spring.TenantInterceptor;
+import com.icthh.xm.commons.web.spring.TenantVerifyInterceptor;
 import com.icthh.xm.commons.web.spring.XmLoggingInterceptor;
 import com.icthh.xm.commons.web.spring.config.XmWebMvcConfigurerAdapter;
 import java.util.List;
@@ -12,21 +13,24 @@ import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 @Configuration
 public class WebMvcConfiguration extends XmWebMvcConfigurerAdapter {
 
-    private final LepInterceptor lepInterceptor;
     private final ApplicationProperties appProps;
+    private final TenantVerifyInterceptor tenantVerifyInterceptor;
+    private final LepInterceptor lepInterceptor;
 
     protected WebMvcConfiguration(LepInterceptor lepInterceptor,
-        TenantInterceptor tenantInterceptor,
-        XmLoggingInterceptor xmLoggingInterceptor,
-        ApplicationProperties appProps) {
+                                  TenantInterceptor tenantInterceptor,
+                                  XmLoggingInterceptor xmLoggingInterceptor,
+                                  ApplicationProperties appProps, TenantVerifyInterceptor tenantVerifyInterceptor) {
         super(tenantInterceptor, xmLoggingInterceptor);
-        this.lepInterceptor = lepInterceptor;
         this.appProps = appProps;
+        this.tenantVerifyInterceptor = tenantVerifyInterceptor;
+        this.lepInterceptor = lepInterceptor;
     }
 
     @Override
     protected void xmAddInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(lepInterceptor).addPathPatterns("/**");
+        registerTenantInterceptorWithIgnorePathPattern(registry, tenantVerifyInterceptor);
+        registerTenantInterceptorWithIgnorePathPattern(registry, lepInterceptor);
     }
 
     @Override

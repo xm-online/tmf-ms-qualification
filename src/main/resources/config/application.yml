@@ -111,6 +111,14 @@ spring:
       enabled: false
   thymeleaf:
     mode: HTML
+  kafka:
+      consumer:
+          key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+          value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+          group-id: qualification
+      producer:
+          key-serializer: org.apache.kafka.common.serialization.StringSerializer
+          value-serializer: org.apache.kafka.common.serialization.StringSerializer
 security:
   oauth2:
     resource:
