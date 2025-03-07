@@ -1,23 +1,22 @@
 package com.icthh.xm.tmf.ms.qualification.lep.keyresolver;
 
-import com.icthh.xm.commons.lep.AppendLepKeyResolver;
-import com.icthh.xm.lep.api.LepManagerService;
+import com.icthh.xm.lep.api.LepKeyResolver;
 import com.icthh.xm.lep.api.LepMethod;
-import com.icthh.xm.lep.api.commons.SeparatorSegmentedLepKey;
 import com.icthh.xm.tmf.ms.qualification.web.rest.util.HeaderRequestExtractor;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ProfileKeyResolver extends AppendLepKeyResolver {
+public class ProfileKeyResolver implements LepKeyResolver {
 
     private final HeaderRequestExtractor headerRequestExtractor;
 
     @Override
-    protected String[] getAppendSegments(SeparatorSegmentedLepKey baseKey,
-                                         LepMethod method,
-                                         LepManagerService managerService) {
-        return new String[]{translateToLepConvention(headerRequestExtractor.get("profile"))};
+    public List<String> segments(LepMethod method) {
+        return List.of(
+            headerRequestExtractor.get("profile")
+        );
     }
 }
