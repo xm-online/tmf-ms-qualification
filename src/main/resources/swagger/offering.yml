@@ -1007,6 +1007,22 @@ definitions:
             '@type':
                 description: Indicates the (class) type of channel
                 type: string
+    Characteristic:
+        description: Describes a given characteristic of an object or entity through a name/value pair.
+        required:
+            - name
+            - value
+        type: object
+        properties:
+            name:
+                description: Name of the characteristic
+                type: string
+            value:
+                description: Value of the characteristic represented as string
+                type: string
+            valueType:
+                description: Data type of the value of the characteristic
+                type: string
     ProductOfferingRef:
         description: 'A product offering represents entities that are orderable from the provider of the catalog, this resource includes pricing information.'
         required:
@@ -1270,6 +1286,9 @@ definitions:
             id:
                 description: Unique identifier of the product
                 type: string
+            externalId:
+                description: External identifier of the product
+                type: string
             href:
                 description: Reference of the product.
                 type: string
@@ -1294,6 +1313,14 @@ definitions:
                     $ref: '#/definitions/RelatedPartyRef'
             productSpecification:
                 $ref: '#/definitions/ProductSpecificationRef'
+    ProductActionType:
+        description: Action to be performed on the product
+        type: string
+        enum:
+            - add
+            - modify
+            - delete
+            - noChange
     ProductRelationship:
         description: Used to describe link(s) to product(s) to the one qualified.
         required:
@@ -1320,6 +1347,9 @@ definitions:
             id:
                 description: Id of the productOfferingQualification item.
                 type: string
+            action:
+                description: Action to be performed on the productOfferingQualification item.
+                $ref: '#/definitions/ProductActionType'
             state:
                 description: 'State of the productOfferingQualification item (acknowledged, inProgress, terminatedWithError, done).'
                 type: string
@@ -1372,6 +1402,9 @@ definitions:
             id:
                 description: Id of the productOfferingQualification item.
                 type: string
+            action:
+                description: Action to be performed on the productOfferingQualification item.
+                $ref: '#/definitions/ProductActionType'
             expectedActivationDate:
                 description: Date when the requester look for productOfferingQualification activation.
                 type: string
@@ -1461,6 +1494,10 @@ definitions:
                     $ref: '#/definitions/RelatedPartyRef'
             channel:
                 $ref: '#/definitions/ChannelRef'
+            characteristic:
+                type: array
+                items:
+                    $ref: '#/definitions/Characteristic'
             productOfferingQualificationItem:
                 type: array
                 items:
@@ -1473,7 +1510,7 @@ definitions:
         type: object
         properties:
             description:
-                description: Description of the productOfferingQualifcation
+                description: Description of the productOfferingQualification
                 type: string
             expectedQualificationDate:
                 description: Deadline date when the requester expected a qualification answer.
@@ -1503,6 +1540,10 @@ definitions:
                     $ref: '#/definitions/RelatedPartyRef'
             channel:
                 $ref: '#/definitions/ChannelRef'
+            characteristic:
+                type: array
+                items:
+                    $ref: '#/definitions/Characteristic'
             productOfferingQualificationItem:
                 type: array
                 items:
