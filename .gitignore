@@ -122,6 +122,7 @@ Desktop.ini
 ######################
 # Others
 ######################
+init.gradle
 *.class
 *.*~
 *~
@@ -141,3 +142,6 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+src/main/lep-sandbox
+src/main/lep/
+src/test/lep/
