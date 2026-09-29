@@ -1,5 +1,6 @@
 package com.icthh.xm.tmf.ms.qualification.config;
 
+import com.icthh.xm.commons.config.client.repository.CommonConfigRepository;
 import com.icthh.xm.commons.config.client.repository.TenantConfigRepository;
 import com.icthh.xm.commons.config.client.repository.TenantListRepository;
 import com.icthh.xm.commons.config.client.service.TenantAliasService;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Collections;
 import java.util.Set;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -34,6 +35,11 @@ public class TenantConfigMockConfiguration {
 
         when(mockTenantListRepository.getTenants()).thenReturn(tenants);
         return mockTenantListRepository;
+    }
+
+    @Bean
+    public CommonConfigRepository commonConfigRepository() {
+        return mock(CommonConfigRepository.class);
     }
 
     @Bean

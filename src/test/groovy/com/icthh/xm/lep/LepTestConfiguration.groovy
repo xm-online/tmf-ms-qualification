@@ -1,5 +1,7 @@
 package com.icthh.xm.lep
 
+import com.icthh.xm.commons.config.client.repository.CommonConfigRepository
+import com.icthh.xm.commons.config.client.repository.TenantListRepository
 import com.icthh.xm.commons.config.client.service.TenantAliasService
 import com.icthh.xm.commons.config.client.service.TenantAliasServiceImpl
 import com.icthh.xm.commons.lep.TenantScriptStorage
@@ -10,6 +12,8 @@ import com.icthh.xm.commons.logging.config.LoggingConfigServiceStub
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Profile
+
+import static org.mockito.Mockito.mock
 
 /**
  * All LEP related configuration should have @Profile('leptest') annotation to prevent interfering with main java test.

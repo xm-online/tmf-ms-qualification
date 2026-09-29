@@ -6,12 +6,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.icthh.xm.tmf.ms.qualification.web.api.ProductOfferingQualificationApiController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 
-@WebMvcTest(controllers = ProductOfferingQualificationApiController.class, secure = false)
+@WebMvcTest(controllers = ProductOfferingQualificationApiController.class)
+// replaces the removed WebMvcTest#secure = false: the test checks the delegate stub, not security
+@AutoConfigureMockMvc(addFilters = false)
 @ContextConfiguration(classes = {ProductOfferingQualificationApiController.class,
     ProductOfferingQualificationDelegate.class})
 class ProductOfferingQualificationDelegateTest {
