@@ -2,12 +2,10 @@ package com.icthh.xm.tmf.ms.qualification.lep;
 
 import com.icthh.xm.commons.config.client.service.TenantConfigService;
 import com.icthh.xm.commons.lep.api.BaseLepContext;
-import com.icthh.xm.commons.lep.processor.GroovyMap;
 import com.icthh.xm.commons.permission.service.PermissionCheckService;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.web.client.RestTemplate;
 
-@GroovyMap
 public class LepContext extends BaseLepContext {
 
     public LepServices services;
