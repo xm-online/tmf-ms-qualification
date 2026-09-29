@@ -1,8 +1,5 @@
-apply plugin: "org.sonarqube"
-apply plugin: 'jacoco'
-
 jacoco {
-    toolVersion = "0.8.5"
+    toolVersion = "0.8.14"
 }
 
 jacocoTestReport {
@@ -11,7 +8,7 @@ jacocoTestReport {
     sourceDirectories.from = files(sourceSets.main.java.srcDirs)
 
     reports {
-        xml.enabled = true
+        xml.required = true
     }
 }
 
@@ -27,3 +24,6 @@ file("sonar-project.properties").withReader {
         }
     }
 }
+
+test.finalizedBy jacocoTestReport
+jacocoTestReport.dependsOn test

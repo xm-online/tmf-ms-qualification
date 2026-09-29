@@ -2,53 +2,46 @@
  * Plugin that provides API-first development using OpenAPI-generator to
  * generate Spring-MVC endpoint stubs at compile time from an OpenAPI definition file
  */
-
 buildscript {
     repositories {
-        maven { url "https://plugins.gradle.org/m2/" }
+        gradlePluginPortal()
+        mavenCentral()
     }
     dependencies {
-        classpath "org.openapitools:openapi-generator-gradle-plugin:4.2.2"
+        classpath "org.openapitools:openapi-generator-gradle-plugin:${openapiPluginVersion}"
     }
 }
+apply plugin: "org.openapi.generator"
 
-task openApiGenerateOffering(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
-    generatorName = "spring"
-    inputSpec = "$rootDir/src/main/resources/swagger/offering.yml".toString()
-    outputDir = "$buildDir/openapi".toString()
-    apiPackage = "com.icthh.xm.tmf.ms.qualification.web.api"
-    modelPackage = "com.icthh.xm.tmf.ms.qualification.web.api.model"
-    apiFilesConstrainedTo = [""]
-    modelFilesConstrainedTo = [""]
-    supportingFilesConstrainedTo = ["ApiUtil.java"]
-    configOptions = [delegatePattern: "true"]
-    validateSpec = true
-    importMappings = [Problem:"org.zalando.problem.Problem"]
-    // copied from https://github.com/OpenAPITools/openapi-generator/blob/v4.2.2/modules/openapi-generator/src/main/resources/JavaSpring/pojo.mustache
-    templateDir = "$rootDir/src/main/resources/openapi/mustache/JavaSpring"
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
+void createOpenApiGenerateTask(String taskName, String ymlName) {
+    tasks.register(taskName, GenerateTask) {
+        generatorName = "spring"
+        inputSpec = "$rootDir/src/main/resources/swagger/${ymlName}.yml".toString()
+        outputDir = layout.buildDirectory.dir("openapi").get().asFile.toString()
+        apiPackage = "com.icthh.xm.tmf.ms.qualification.web.api"
+        modelPackage = "com.icthh.xm.tmf.ms.qualification.web.api.model"
+        apiFilesConstrainedTo = [""]
+        modelFilesConstrainedTo = [""]
+        supportingFilesConstrainedTo = ["ApiUtil.java"]
+        configOptions = [delegatePattern: "true", title: "qualification", useSpringBoot3: "true", useJakartaEe: "true"]
+        validateSpec = true
+        importMappings = [Problem:"org.zalando.problem.Problem"]
+        // Custom JavaSpring pojo.mustache (generator 4.2.2) dropped during the Boot 4 migration: it
+        // emitted Swagger-1 @ApiModel/@ApiModelProperty annotations. The generator's default
+        // Boot 3/Jakarta templates emit io.swagger.v3 @Schema instead.
+    }
+    compileJava.dependsOn(taskName)
 }
 
-task openApiGeneratePromotion(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
-    generatorName = "spring"
-    inputSpec = "$rootDir/src/main/resources/swagger/promotion.yml".toString()
-    outputDir = "$buildDir/openapi".toString()
-    apiPackage = "com.icthh.xm.tmf.ms.qualification.web.api"
-    modelPackage = "com.icthh.xm.tmf.ms.qualification.web.api.model"
-    apiFilesConstrainedTo = [""]
-    modelFilesConstrainedTo = [""]
-    supportingFilesConstrainedTo = ["ApiUtil.java"]
-    configOptions = [delegatePattern: "true"]
-    validateSpec = true
-    importMappings = [Problem:"org.zalando.problem.Problem"]
-    templateDir = "$rootDir/src/main/resources/openapi/mustache/JavaSpring"
-}
+createOpenApiGenerateTask("openApiGenerateOffering", "offering")
+createOpenApiGenerateTask("openApiGeneratePromotion", "promotion")
 
 sourceSets {
     main {
         java {
-            srcDir file("${project.buildDir.path}/openapi/src/main/java")
+            srcDir file(layout.buildDirectory.dir("openapi/src/main/java").get().asFile)
         }
     }
 }
-
-compileJava.dependsOn openApiGenerateOffering, openApiGeneratePromotion
