@@ -1,45 +1,33 @@
 package com.icthh.xm.tmf.ms.qualification.config;
 
-import com.icthh.xm.commons.lep.spring.web.LepInterceptor;
-import com.icthh.xm.commons.web.spring.TenantInterceptor;
 import com.icthh.xm.commons.web.spring.TenantVerifyInterceptor;
-import com.icthh.xm.commons.web.spring.XmLoggingInterceptor;
-import com.icthh.xm.commons.web.spring.config.XmWebMvcConfigurerAdapter;
-import java.util.List;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Tenant, logging and LEP interceptors are registered by xm-commons {@code WebMvcConfig}; registering them
+ * here again made every request destroy the tenant context twice. xm-commons picks up only
+ * {@code AsyncHandlerInterceptor}s, so the suspended-tenant check is still registered here, after the
+ * tenant context is set.
+ */
 @Configuration
-public class WebMvcConfiguration extends XmWebMvcConfigurerAdapter {
+public class WebMvcConfiguration implements WebMvcConfigurer {
 
     private final ApplicationProperties appProps;
     private final TenantVerifyInterceptor tenantVerifyInterceptor;
-    private final LepInterceptor lepInterceptor;
 
-    protected WebMvcConfiguration(LepInterceptor lepInterceptor,
-                                  TenantInterceptor tenantInterceptor,
-                                  XmLoggingInterceptor xmLoggingInterceptor,
-                                  ApplicationProperties appProps, TenantVerifyInterceptor tenantVerifyInterceptor) {
-        super(tenantInterceptor, xmLoggingInterceptor);
+    public WebMvcConfiguration(ApplicationProperties appProps, TenantVerifyInterceptor tenantVerifyInterceptor) {
         this.appProps = appProps;
         this.tenantVerifyInterceptor = tenantVerifyInterceptor;
-        this.lepInterceptor = lepInterceptor;
     }
 
     @Override
-    protected void xmAddInterceptors(final InterceptorRegistry registry) {
-        registerTenantInterceptorWithIgnorePathPattern(registry, tenantVerifyInterceptor);
-        registerTenantInterceptorWithIgnorePathPattern(registry, lepInterceptor);
-    }
-
-    @Override
-    protected void xmConfigurePathMatch(PathMatchConfigurer configurer) {
-
-    }
-
-    @Override
-    protected List<String> getTenantIgnorePathPatterns() {
-        return appProps.getTenantIgnoredPathList();
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(tenantVerifyInterceptor)
+            .addPathPatterns("/**")
+            .excludePathPatterns(appProps.getTenantIgnoredPathList())
+            .order(Ordered.LOWEST_PRECEDENCE);
     }
 }
