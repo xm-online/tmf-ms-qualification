@@ -3,8 +3,6 @@ package com.icthh.xm.tmf.ms.qualification.lep;
 import com.icthh.xm.commons.config.client.service.TenantConfigService;
 import com.icthh.xm.commons.lep.api.BaseLepContext;
 import com.icthh.xm.commons.lep.api.LepContextFactory;
-import com.icthh.xm.commons.lep.commons.CommonsExecutor;
-import com.icthh.xm.commons.lep.commons.CommonsService;
 import com.icthh.xm.commons.permission.service.PermissionCheckService;
 import com.icthh.xm.lep.api.LepMethod;
 import io.micrometer.core.instrument.MeterRegistry;

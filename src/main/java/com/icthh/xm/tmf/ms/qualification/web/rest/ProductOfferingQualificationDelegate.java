@@ -7,7 +7,6 @@ import com.icthh.xm.tmf.ms.qualification.lep.keyresolver.ProfileKeyResolver;
 import com.icthh.xm.tmf.ms.qualification.web.api.ProductOfferingQualificationApiDelegate;
 import com.icthh.xm.tmf.ms.qualification.web.api.model.POSTREQProductOfferingQualification;
 import com.icthh.xm.tmf.ms.qualification.web.api.model.ProductOfferingQualification;
-import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component;
 @LepService(group = "service")
 public class ProductOfferingQualificationDelegate implements ProductOfferingQualificationApiDelegate {
 
-    @Timed
     @Override
     @LogicExtensionPoint(value = "ProductOfferingQualificationGet", resolver = ProfileKeyResolver.class)
     @PrivilegeDescription("Privilege to get a product offering qualification")
@@ -28,7 +26,6 @@ public class ProductOfferingQualificationDelegate implements ProductOfferingQual
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
-    @Timed
     @Override
     @LogicExtensionPoint(value = "ProductOfferingQualificationCreate", resolver = ProfileKeyResolver.class)
     @PrivilegeDescription("Privilege to create a product offering qualification")
