@@ -153,6 +153,17 @@ test {
 
 }
 
+// `test --tests <pattern>` (e.g. `cleanTest test --tests '*.qualification.test.*'` for tenant LEP tests):
+// run the selected tests in `test` whatever their category. Without this the categorized ones (LEP groovy
+// tests are tagged AbstractUnitTest) are excluded from `test`, which then fails with "No tests found",
+// while runCategorizedTests ignores the filter and runs every categorized test.
+gradle.taskGraph.whenReady { graph ->
+    if (graph.hasTask(test) && !test.filter.commandLineIncludePatterns.isEmpty()) {
+        test.options { excludeTags = [] as Set }
+        tasks.named('runCategorizedTests').configure { enabled = false }
+    }
+}
+
 tasks.register('runCategorizedTests', Test) {
     useJUnitPlatform {
         includeTags(testCategories)
