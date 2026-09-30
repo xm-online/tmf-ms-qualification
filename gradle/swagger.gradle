@@ -25,7 +25,10 @@ void createOpenApiGenerateTask(String taskName, String ymlName) {
         apiFilesConstrainedTo = [""]
         modelFilesConstrainedTo = [""]
         supportingFilesConstrainedTo = ["ApiUtil.java"]
-        configOptions = [delegatePattern: "true", title: "qualification", useSpringBoot3: "true", useJakartaEe: "true"]
+        configOptions = [delegatePattern: "true", title: "qualification", useSpringBoot3: "true", useJakartaEe: "true",
+                         // Jackson 3 deserializes through a required-args constructor: absent fields became null
+                         // instead of the model defaults. The 4.x generator had no such constructor
+                         generatedConstructorWithRequiredArgs: "false"]
         validateSpec = true
         importMappings = [Problem:"org.zalando.problem.Problem"]
         // Custom JavaSpring pojo.mustache (generator 4.2.2) dropped during the Boot 4 migration: it

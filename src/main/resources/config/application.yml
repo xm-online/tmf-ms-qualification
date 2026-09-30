@@ -97,6 +97,9 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
         implicit-strategy: org.springframework.boot.hibernate.SpringImplicitNamingStrategy
   jackson:
+    mapper:
+      # Jackson 3 sorts properties alphabetically by default; keep the declaration order responses had before
+      sort-properties-alphabetically: false
     default-property-inclusion: non_null
   messages:
     basename: i18n/messages
