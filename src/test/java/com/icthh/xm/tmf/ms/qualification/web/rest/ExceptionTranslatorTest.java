@@ -15,13 +15,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tools.jackson.databind.json.JsonMapper;
 
 @SpringBootTest(classes = {SecurityBeanOverrideConfiguration.class,
     QualificationApp.class, ExceptionTranslatorTest.TestController.class})
@@ -29,14 +30,14 @@ public class ExceptionTranslatorTest {
     public static final String EXPECTED_CODE = "expected.code";
     public static final String EXPECTED_MESSAGE = "expected.message";
 
-    @MockBean
+    @MockitoBean
     LocalizationMessageService localizationMessageService;
     @Autowired
     private TestController controller;
     @Autowired
     private ExceptionTranslator exceptionTranslator;
     @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+    private JsonMapper jsonMapper;
 
     MockMvc mockMvc;
 
@@ -44,7 +45,7 @@ public class ExceptionTranslatorTest {
     public void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
             .setControllerAdvice(exceptionTranslator)
-            .setMessageConverters(jacksonMessageConverter)
+            .setMessageConverters(new JacksonJsonHttpMessageConverter(jsonMapper))
             .build();
     }
 

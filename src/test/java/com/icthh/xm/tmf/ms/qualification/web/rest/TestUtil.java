@@ -1,14 +1,13 @@
 package com.icthh.xm.tmf.ms.qualification.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.http.MediaType;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public final class TestUtil {
 
-    private static final ObjectMapper mapper = createObjectMapper();
+    private static final JsonMapper mapper = createObjectMapper();
 
     /** MediaType for JSON UTF8 */
     public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(
@@ -30,11 +29,10 @@ public final class TestUtil {
             MediaType.APPLICATION_JSON.getSubtype(), StandardCharsets.UTF_8);
 
 
-    private static ObjectMapper createObjectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-        mapper.registerModule(new JavaTimeModule());
-        return mapper;
+    private static JsonMapper createObjectMapper() {
+        return JsonMapper.builder()
+            .changeDefaultPropertyInclusion(incl -> incl.withValueInclusion(JsonInclude.Include.NON_EMPTY))
+            .build();
     }
 
     /**

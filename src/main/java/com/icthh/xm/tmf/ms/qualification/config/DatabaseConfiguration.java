@@ -1,7 +1,5 @@
 package com.icthh.xm.tmf.ms.qualification.config;
 
-import io.github.jhipster.config.JHipsterConstants;
-import io.github.jhipster.config.h2.H2ConfigurationHelper;
 import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +10,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import tech.jhipster.config.JHipsterConstants;
+import tech.jhipster.config.h2.H2ConfigurationHelper;
 
 @Configuration
 @EnableJpaRepositories("com.icthh.xm.tmf.ms.qualification.repository")

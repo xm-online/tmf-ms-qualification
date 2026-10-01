@@ -6,7 +6,6 @@ import com.icthh.xm.commons.permission.annotation.PrivilegeDescription;
 import com.icthh.xm.tmf.ms.qualification.lep.keyresolver.ProfileChannelKeyResolver;
 import com.icthh.xm.tmf.ms.qualification.web.api.PromotionQualificationApiDelegate;
 import com.icthh.xm.tmf.ms.qualification.web.api.model.PromotionQualification;
-import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
 @LepService(group = "service", name = "default")
 public class PromotionQualificationDelegate implements PromotionQualificationApiDelegate {
 
-    @Timed
     @LogicExtensionPoint(value = "PromotionQualificationFind", resolver = ProfileChannelKeyResolver.class)
     @PreAuthorize("hasPermission({'profile': #profile, 'relatedPartyId': #relatedPartyId, 'channelId': #channelId}, 'QUALIFICATION.PROMOTION.GET')")
     @Override

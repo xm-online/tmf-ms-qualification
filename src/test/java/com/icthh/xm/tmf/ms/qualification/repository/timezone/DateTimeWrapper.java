@@ -1,6 +1,6 @@
 package com.icthh.xm.tmf.ms.qualification.repository.timezone;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.*;
 import java.util.Objects;
@@ -13,7 +13,9 @@ public class DateTimeWrapper implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    // Hibernate 6+ no longer falls back to "hibernate_sequence" (generator_name_as_sequence_name is gone),
+    // so the sequence created by the initial liquibase changelog is named explicitly
+    @SequenceGenerator(name = "sequenceGenerator", sequenceName = "hibernate_sequence", allocationSize = 50)
     private Long id;
 
     @Column(name = "instant")

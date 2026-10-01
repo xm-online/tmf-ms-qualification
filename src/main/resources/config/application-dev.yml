@@ -13,19 +13,22 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+management:
+  tracing:
+    export:
+      enabled: false
+  otlp:
+    metrics:
+      export:
+        enabled: false
+
 logging:
   level:
     ROOT: DEBUG
-    io.github.jhipster: DEBUG
+    tech.jhipster: DEBUG
     com.icthh.xm.tmf.ms.qualification: DEBUG
 
 spring:
-  profiles:
-    active: dev
-    include:
-      - swagger
-      # Uncomment to activate TLS for the dev profile
-      #- tls
   devtools:
     restart:
       enabled: true
@@ -53,7 +56,7 @@ spring:
     console:
       enabled: false
   jpa:
-    database-platform: io.github.jhipster.domain.util.FixedH2Dialect
+    database-platform: org.hibernate.dialect.H2Dialect
     database: H2
     show-sql: true
     properties:
@@ -74,15 +77,6 @@ spring:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
     cache: false
-  sleuth:
-    sampler:
-      probability: 1 # report 100% of traces
-  zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
-    base-url: http://localhost:9411
-    enabled: false
-    locator:
-      discovery:
-        enabled: true
   kafka:
     bootstrap-servers: localhost:9092
 server:
@@ -113,17 +107,13 @@ jhipster:
   mail: # specific JHipster mail property, for standard properties see MailProperties
     base-url: http://127.0.0.1:8715
     from: qualification@localhost
-  metrics:
-    logs: # Reports metrics in the logs
-      enabled: false
-      report-frequency: 60 # in seconds
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
       enabled: false
       host: localhost
       port: 5000
-      queue-size: 512
+      ring-buffer-size: 512
 oauth2:
   signature-verification:
     public-key-endpoint-uri: http://config/api/token_key
