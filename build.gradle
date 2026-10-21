@@ -29,9 +29,30 @@ plugins {
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
+// Overrides of Spring Boot managed versions
+ext["tomcat.version"] = tomcatVersion
+ext["jackson-bom.version"] = jacksonVersion
+ext["jackson-2-bom.version"] = jackson2Version
+
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+    // Overrides of transitive dependency versions
+    dependencies {
+        dependencySet(group: "org.bouncycastle", version: bouncycastleVersion) {
+            entry "bcprov-jdk18on"
+            entry "bcpkix-jdk18on"
+            entry "bcutil-jdk18on"
+        }
+        dependencySet(group: "org.apache.ant", version: antVersion) {
+            entry "ant"
+            entry "ant-launcher"
+            entry "ant-antlr"
+            entry "ant-junit"
+        }
+        dependency "com.github.luben:zstd-jni:${zstdJniVersion}"
+        dependency "at.yawk.lz4:lz4-java:${lz4JavaVersion}"
     }
 }
 
