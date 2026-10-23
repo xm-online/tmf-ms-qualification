@@ -105,11 +105,6 @@ jhipster:
         base64-secret: OGFlZWVhMTIxNGNkNjJjNzg4Zjg5NGFiYWI3MGIxMTA4MzM5MjU2Mjg3MWVhNDVhZGE5OTBmOWIwMTZiMDM3MTdjMmY5MTVlNzFjNzlmNDM0ZTgwOTE1MWVjMjdkMDUxYzcyNGI1ZTNiMjgzMjhmYmRkZWRkNDlhMjc3NjViYWU=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
-    client-authorization:
-      access-token-uri: http://uaa/oauth/token
-      token-service-id: uaa
-      client-id: internal
-      client-secret: internal
   mail:
     from: test@localhost
     base-url: http://127.0.0.1:8080
