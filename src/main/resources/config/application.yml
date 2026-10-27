@@ -37,6 +37,13 @@ management:
   endpoint:
     health:
       show-details: when-authorized
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState,db
     jhimetrics:
       enabled: true
   info:
@@ -79,8 +86,6 @@ spring:
       config:
         watch:
           enabled: false
-  jmx:
-    enabled: false
   data:
     jpa:
       repositories:
@@ -115,6 +120,7 @@ spring:
       producer:
           key-serializer: org.apache.kafka.common.serialization.StringSerializer
           value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # Kafka connection by environment variables, PLAINTEXT when not set: https://github.com/xm-online/xm-ms-template/blob/main/README.md#kafka-connection
 server:
   servlet:
     session:
@@ -176,7 +182,7 @@ application:
   kafka-enabled: true
   kafka-system-topic: system_topic
   kafka-system-queue: system_queue
-  tenant-ignored-path-list: /swagger-resources/configuration/ui, /management/health, /oauth/token_key, /h2-console, /v3/api-docs
+  tenant-ignored-path-list: /swagger-resources/configuration/ui, /management/health, /management/health/liveness, /management/health/readiness, /oauth/token_key, /h2-console, /v3/api-docs, /error
   timelines-enabled: true
   lep:
     tenant-script-storage: XM_MS_CONFIG
@@ -189,3 +195,6 @@ application:
     connection-request-timeout: 0
     connect-timeout: 0
     read-timeout: 0
+  config-private-key: # APPLICATION_CONFIG_PRIVATE_KEY=MC4CAQAwBQYDK2Vw..., base64 Ed25519 private key (PKCS#8 DER) to sign the requests to /api/private/v2 of xm-ms-config; not needed with the profile migration
+  api-docs:
+    privilege-check: true
